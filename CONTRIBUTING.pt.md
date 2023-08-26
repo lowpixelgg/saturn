@@ -11,7 +11,7 @@ Como um novo contribuidor em potencial, você precisará fazer um fork em nosso 
 
 Nosso branch MAIN é o principal branch de desenvolvimento que contém o código mais recente e de última geração.
 
-Nossos outros ramos contêm pesquisas inovadoras, ideias radicais e outras mudanças em andamento que devem ser incorporadas ao MAIN posteriormente.
+Nossos outros ramos contém pesquisas inovadoras, ideias radicais e outras mudanças em andamento que devem ser incorporadas ao MAIN posteriormente.
 
 Se você é um colaborador, a escolha é sua: enviar ramificações para este repositório ou para seu próprio fork.
 
@@ -26,23 +26,22 @@ Claro, se você estiver interessado em outra coisa, sinta-se à vontade para exp
 
 
 # "Commitando" código
-Certifique-se de que suas contribuições de código sigam o Guia de estilo.
+Certifique-se de que suas contribuições de código sigam o guia de estilo.
 
 Os commits devem ser testados quando adicionados ao master. Commits que 'precisam ser corrigidos mais tarde' e que afetam diretamente o estado do sistema serão revertidos, exceto em circunstâncias excepcionais.
 
 **As mensagens de commit devem**
 
-- Ser consistente
-- Sempre dê uma indicação clara do que foi alterado sem ter que olhar o código
-- Inclua números de problemas, usando palavras-chave do GitHub quando necessário
-- Siga as sete regras identificadas aqui
-- A mais importante das sete regras foi copiada abaixo, mas leia o artigo:
-- Use sempre inglês para facilitar o trabalho do colega colaborador.
+- Ser consistentes;
+- Sempre ter uma indicação clara do que foi alterado sem ter que olhar o código;
+- Incluir números de problemas, usando palavras-chave do GitHub quando necessário;
+- Sempre usar inglês para facilitar o trabalho do colega colaborador;
+- Seguir as regras aqui identificadas.
 
 Separe o assunto do corpo com uma linha em branco
-- Limite a linha de assunto a cerca de 60-80 caracteres
-- Use o modo imperativo na linha de assunto
-- Use o corpo para explicar o que e por que versus como
+- Limite a linha de assunto a cerca de 60-80 caracteres;
+- Use o modo imperativo na linha de assunto;
+- Use o corpo para explicar o que é, o porquê, versus, como.
 - Os commits de acompanhamento (adendo) devem referir-se ao commit anterior. Faça isso incluindo o identificador de commit anterior SHA e, se houver - Espaço, uma mensagem de commit resumida na nova mensagem de commit. Fazer isso ajudará a identificar commits relacionados se eles forem visualizados posteriormente.
 
 Tente manter as solicitações pull pequenas - elas devem tratar de uma coisa. Quando você faz várias coisas em uma solicitação pull, é difícil revisar. Se você estiver consertando coisas à medida que avança, convém fazer commits atômicos e, em seguida, selecionar esses commits em ramificações separadas, deixando a solicitação pull limpa.
@@ -53,7 +52,7 @@ Tente manter as solicitações pull pequenas - elas devem tratar de uma coisa. Q
 Fix database connection at @services/prisma/connection.ts
 
 Fixed 2 connection problems:
-- Disconect after some random connectio
+- Disconect after some random connection
 - Disconnect after random user send a information
 ```
 
@@ -81,14 +80,14 @@ Addendum to a80f8d6: fix Connection handler
 ```
 
 # Revisão código
-Os contribuidores devem tentar revisar os commits de outros contribuidores e fornecer feedback tanto quanto possível.
+Os contribuidores devem tentar revisar os commits de outros contribuidores e fornecer feedback sempre quando possível.
 
 **Ganhar e perder direitos de mesclagem**
 Os direitos de mesclagem permitem mesclar suas próprias solicitações pull aprovadas e revisar as solicitações pull de outras pessoas.
 
-Concedemos direitos de mesclagem depois que você provar que é competente, o que geralmente ocorre após 3 a 5 solicitações pull. Isto não é fixo e depende da extensão das suas contribuições, do status da comunidade e de outros fatores.
+Concedemos direitos de mesclagem depois que você provar que é competente, o que geralmente ocorre após 3 à 5 solicitações pull. Isto não é fixo e depende da extensão das suas contribuições, do status da comunidade e de outros fatores.
 
-O assunto de suas solicitações pull não importa — estamos mais interessados em, uma vez concedidos os direitos de mesclagem, se você é capaz de manter um alto padrão de código e permanecer coeso com outros colaboradores do projeto.
+O assunto de suas solicitações pull não importa — estamos mais interessados em se uma vez concedidos os direitos de mesclagem, você é capaz ou não de manter um alto padrão de código e permanecer coeso com outros colaboradores do projeto.
 
 Depois de obter direitos de mesclagem, se suas contribuições forem de padrão consistentemente baixo ou se você não seguir as regras, suas permissões serão revogadas.
 
@@ -101,7 +100,7 @@ Antes da merge, imposta pela proteção de ramificação do GitHub, as solicita�
 
 - Para fins informativos, os administradores atuais do repositório são aqueles marcados como membros no Github Teams.
 
-Geralmente use o botão "Squash and merge". Se vários commits forem necessários porque você acha que ter commits separados é útil, use "Rebase and merge".
+Por padrão, use o botão "Squash and merge". Se vários commits forem necessários porque você acha que ter commits separados é útil, use "Rebase and merge".
 
 
 
