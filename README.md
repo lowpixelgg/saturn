@@ -13,12 +13,12 @@ Saturn seeks to integrate not only monoliths, but the entire Rocket ecosystem so
 - Redis
 
 
-# Development
+## Development
 Main IDE: [Visual Studio Code](https://code.visualstudio.com) <br>
 Engine: [Node](https://nodejs.org)
 
 
-### Running a dev-server: <br>
+#### Running a dev-server: <br>
 > You can start a local server for development without using separate command lines for each service.
 ```bash
 cd saturn
@@ -26,7 +26,7 @@ docker compose up -d
 yarn && yarn dev
 ```
 
-### Testing it <br>
+#### Testing it <br>
 > We used the test files as close as possible to native code for easy access. Please keep this in mind before contributing.
 ```bash
 cd saturn
@@ -34,7 +34,7 @@ cd saturn
 yarn tests
 ```
 
-### SMTP
+#### SMTP
 > For sending emails to users and customers we use sendinblue in production. However, in a development environment, we strongly recommend that you use the [Mailtrap](https://mailtrap.io)
 ```env
 MAILER_HOST=[SMTP_HOST]
@@ -44,7 +44,7 @@ MAILER_AUTH_USERNAME=[SMTP_AUTH_USER]
 MAILER_AUTH_PASSWORD=[SMTP_AUTH_PASSWORD]
 ```
 
-### Storage(GCP)
+#### Storage(GCP)
 > Again, in production we use GCP-Storage to store image files in .webp unfortunately saturn does not yet have a development env to provide local storage. We hope to change this in the future.
 > However, you can create a free trial account at [Google Cloud](https://cloud.google.com) to develop features related to storage, you should get a config file that looks like this for saturn to work stably.
 ```json
