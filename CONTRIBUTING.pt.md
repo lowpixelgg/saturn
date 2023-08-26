@@ -105,4 +105,4 @@ Geralmente use o botão "Squash and merge". Se vários commits forem necessário
 
 
 
-Este artigo foi baseado em: [MTA CONTRIBUTING.md](https://github.com/multitheftauto/mtasa-blue/blob/master/CONTRIBUTING.md)'
+Este artigo foi baseado em: [MTA CONTRIBUTING.md](https://github.com/multitheftauto/mtasa-blue/blob/master/CONTRIBUTING.md)
