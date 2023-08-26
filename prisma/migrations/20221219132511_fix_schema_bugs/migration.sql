@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "profiles" ALTER COLUMN "instagram" DROP NOT NULL,
+ALTER COLUMN "twitch" DROP NOT NULL,
+ALTER COLUMN "youtube" DROP NOT NULL;

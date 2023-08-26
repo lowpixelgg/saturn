@@ -1,0 +1,20 @@
+version: '3.5'
+
+volumes:
+  postgres-data:
+
+services:
+  postgres:
+    image: postgres:14
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=vitor
+    volumes:
+      - postgres-data:/var/lib/postgres/data
+      - type: tmpfs
+        target: /dev/shm
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379

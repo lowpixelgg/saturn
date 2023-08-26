@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\core",
+    "\\src\\core\\accounts",
+    "\\src\\core\\accounts\\useCases",
+    "\\src\\core\\accounts\\useCases\\activate"
+  ],
+  "SelectedNode": "\\src\\core\\accounts\\useCases\\activate\\AccountActivation.ts",
+  "PreviewInSolutionExplorer": false
+}
