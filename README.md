@@ -62,3 +62,20 @@ MAILER_AUTH_PASSWORD=[SMTP_AUTH_PASSWORD]
 }
 ```
 Small Note: you will only need this if you are going to work with storage, fixes and features that do not depend on it, it is not necessary to configure this file.
+
+## Building
+We use vitepack for testing and building the project, so building and compiling becomes extremely easy and performant. Perform the steps below to create a mastered version for external Saturn testing
+```bash
+cd saturn
+yarn && yarn build
+pm2 start run.sh --name ROCKET_CADBRA1
+```
+Remember to read the LICENSE before hosting a Saturn for testing.
+
+# Contributing
+We appreciate you joining our development team fixing bugs, creating features or improving the ecosystem as a whole. Feel free to compile and create custom forks of the system. But first of all remember that this system is under license for non-commercial use. Also remember to read the CONTRIBUITE.pt.md file or in your native language before creating a PR or ISSUE.
+
+
+
+<br><br>
+Made with ❤️ by Rocket for Community.
