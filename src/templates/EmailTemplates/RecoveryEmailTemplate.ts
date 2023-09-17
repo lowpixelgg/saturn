@@ -442,4 +442,4 @@ export const RecoveryEmailTemplate = (username: string, token: string) => `
       </tr>
     </table>
   </body>
-</html>`
+</html>`;

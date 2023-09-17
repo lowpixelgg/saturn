@@ -1,5 +1,5 @@
-import { Tokens as PersistenceToken } from '@prisma/client'
-import { Token } from '../domain/user/Token'
+import { Tokens as PersistenceToken } from '@prisma/client';
+import { Token } from '../domain/user/Token';
 
 export class TokenMapper {
   static toDomain(raw: PersistenceToken) {
@@ -11,9 +11,9 @@ export class TokenMapper {
         used: raw.used,
       },
       raw.id
-    )
+    );
 
-    return token
+    return token;
   }
 
   static toPersistence(raw: Token) {
@@ -23,6 +23,6 @@ export class TokenMapper {
       type: raw.type,
       user_id: raw.userId,
       used: raw.used,
-    }
+    };
   }
 }

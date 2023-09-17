@@ -13,4 +13,4 @@ export default {
   speaker_role: '1081256931290791937',
 
   accepted: ['1002973868564164628'],
-}
+};

@@ -1,4 +1,4 @@
-import { greeting } from '@utils/greetingMessage'
+import { greeting } from '@utils/greetingMessage';
 
 export const AppointmentAlertTemplate = (message: string) => `
 <!DOCTYPE html>
@@ -430,4 +430,4 @@ export const AppointmentAlertTemplate = (message: string) => `
       </tr>
     </table>
   </body>
-</html>`
+</html>`;

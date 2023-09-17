@@ -1,12 +1,12 @@
-import { Controller } from '@core/infra/Controller'
-import { fail, HttpResponse, ok } from '@core/infra/HttpResponse'
-import { SearchProfiles } from './SearchProfiles'
+import { Controller } from '@core/infra/Controller';
+import { fail, HttpResponse, ok } from '@core/infra/HttpResponse';
+import { SearchProfiles } from './SearchProfiles';
 
 type SearchProfilesControllerRequest = {
-  query?: string
-  page?: string
-  per_page?: string
-}
+  query?: string;
+  page?: string;
+  per_page?: string;
+};
 
 export class SearchProfilesController implements Controller {
   constructor(private searchProfiles: SearchProfiles) {}
@@ -21,7 +21,7 @@ export class SearchProfilesController implements Controller {
         query,
         page: page ? Number(page) : undefined,
         perPage: per_page ? Number(per_page) : undefined,
-      })
+      });
 
       const profiles = data.map(profile => {
         return {
@@ -43,12 +43,12 @@ export class SearchProfilesController implements Controller {
           medals: profile.medals,
           status: profile.status,
           slug: profile.slug,
-        }
-      })
+        };
+      });
 
-      return ok({ data: profiles, totalCount })
+      return ok({ data: profiles, totalCount });
     } catch (err) {
-      return fail(err)
+      return fail(err);
     }
   }
 }

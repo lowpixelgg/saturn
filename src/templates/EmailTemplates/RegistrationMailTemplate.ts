@@ -440,4 +440,4 @@ export const RegistrationEmailTemplate = (username: string, token: string) => `
       </tr>
     </table>
   </body>
-</html>`
+</html>`;

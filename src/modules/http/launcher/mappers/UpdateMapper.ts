@@ -1,14 +1,13 @@
-import { Update as UpdateRaw } from "@prisma/client";
-import { Update } from "../domain/Update";
+import { Update as UpdateRaw } from '@prisma/client';
+import { Update } from '../domain/Update';
 
-type PersistenceUpdateRaw = UpdateRaw
-
+type PersistenceUpdateRaw = UpdateRaw;
 
 export class UpdateMapper {
   static toDomain(raw: PersistenceUpdateRaw): Update {
     const update = Update.create({
       ...raw,
-      release: new Date(raw.release).toISOString()
+      release: new Date(raw.release).toISOString(),
     });
 
     if (update) {
@@ -27,7 +26,7 @@ export class UpdateMapper {
       release: new Date(update.release),
       rm: update.rm,
       sha1: update.sha1,
-      version: update.version
-    }
+      version: update.version,
+    };
   }
 }

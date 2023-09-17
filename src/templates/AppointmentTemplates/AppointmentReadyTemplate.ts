@@ -443,4 +443,4 @@ export const AppointmentReadyTemplate = (
       </tr>
     </table>
   </body>
-</html>`
+</html>`;

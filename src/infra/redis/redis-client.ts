@@ -1,5 +1,5 @@
-import RedisClient from "ioredis";
-import { promisify } from "util";
+import RedisClient from 'ioredis';
+import { promisify } from 'util';
 
 const redis = new RedisClient();
 

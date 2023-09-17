@@ -1,6 +1,6 @@
-import { Exam as PersistenceAnswer } from '@prisma/client'
+import { Exam as PersistenceAnswer } from '@prisma/client';
 
-import { Answer } from '../domain/Answer'
+import { Answer } from '../domain/Answer';
 
 export class AnswerMapper {
   static toDomain(raw: PersistenceAnswer): Answer {
@@ -11,9 +11,9 @@ export class AnswerMapper {
         whitelist_id: raw.whitelist_id,
       },
       raw.id
-    )
+    );
 
-    return answer
+    return answer;
   }
 
   static toPersistence(answer: Answer) {
@@ -22,6 +22,6 @@ export class AnswerMapper {
       answer: answer.answer,
       question: answer.question,
       whitelist_id: answer.whitelist_id,
-    }
+    };
   }
 }

@@ -1,5 +1,5 @@
-import Mail from '@infra/libs/nodemailer/nodemailer'
-import { AppointmentAlertTemplate } from '@templates/AppointmentTemplates/AppointmentAlertTemplate'
+import Mail from '@infra/libs/nodemailer/nodemailer';
+import { AppointmentAlertTemplate } from '@templates/AppointmentTemplates/AppointmentAlertTemplate';
 
 export default {
   key: 'AppointmentAlertMail',
@@ -13,6 +13,6 @@ export default {
       to: `${data.username} <${data.email}>`,
       subject: 'A sua entrevista começa em 10 minutos.',
       html: AppointmentAlertTemplate(data.message),
-    })
+    });
   },
-}
+};

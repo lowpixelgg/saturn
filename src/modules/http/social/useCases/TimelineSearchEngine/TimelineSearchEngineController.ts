@@ -1,19 +1,19 @@
-import { Post } from '@modules/http/social/domain/timeline/Post'
-import { Controller } from '@core/infra/Controller'
+import { Post } from '@modules/http/social/domain/timeline/Post';
+import { Controller } from '@core/infra/Controller';
 import {
   clientError,
   HttpResponse,
   notFound,
   ok,
-} from '@core/infra/HttpResponse'
-import { TimelineSearchEngineProfileNotExists } from './errors/TimelineSearchEngineProfileNotExists'
-import { TimelineSearchEngine } from './TimelineSearchEngine'
+} from '@core/infra/HttpResponse';
+import { TimelineSearchEngineProfileNotExists } from './errors/TimelineSearchEngineProfileNotExists';
+import { TimelineSearchEngine } from './TimelineSearchEngine';
 
 type TimelineSearchEngineControllerRequest = {
-  user: { id: string }
-  page?: string
-  perPage?: string
-}
+  user: { id: string };
+  page?: string;
+  perPage?: string;
+};
 
 export class TimelineSearchEngineController implements Controller {
   constructor(private timelineSearchEngine: TimelineSearchEngine) {}
@@ -27,19 +27,19 @@ export class TimelineSearchEngineController implements Controller {
       user,
       page: page ? Number(page) : undefined,
       perPage: page ? Number(perPage) : undefined,
-    })
+    });
 
     if (result.isLeft()) {
-      const error = result.value
+      const error = result.value;
 
       switch (error.constructor) {
         case TimelineSearchEngineProfileNotExists:
-          return notFound(error)
+          return notFound(error);
         default:
-          return clientError(error)
+          return clientError(error);
       }
     } else {
-      return ok(result.value)
+      return ok(result.value);
     }
   }
 }

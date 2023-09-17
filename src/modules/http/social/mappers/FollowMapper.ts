@@ -1,9 +1,9 @@
-import { Profile, Follower as PersistenceFollower } from '@prisma/client'
-import { Follow } from '@modules/http/social/domain/profiles/Follow'
+import { Profile, Follower as PersistenceFollower } from '@prisma/client';
+import { Follow } from '@modules/http/social/domain/profiles/Follow';
 
 type PersistenceFollowRaw = PersistenceFollower & {
-  following: Profile
-}
+  following: Profile;
+};
 
 export class FollowMapper {
   static toDomain(raw: PersistenceFollowRaw): Follow {
@@ -14,9 +14,9 @@ export class FollowMapper {
         following: raw.following,
       },
       raw.id
-    )
+    );
 
-    return follow
+    return follow;
   }
 
   static toPersistence(follow: Follow) {
@@ -25,6 +25,6 @@ export class FollowMapper {
       followers_id: follow.followers_id,
       following_id: follow.following_id,
       following: follow.following,
-    }
+    };
   }
 }

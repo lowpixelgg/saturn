@@ -1,17 +1,17 @@
-import { WatchedList } from '@core/domain/WatchedList'
+import { WatchedList } from '@core/domain/WatchedList';
 
-import { Notification } from './Notification'
+import { Notification } from './Notification';
 
 export class Notifications extends WatchedList<Notification> {
   private constructor(notifications: Notification[]) {
-    super(notifications)
+    super(notifications);
   }
 
   public compareItems(a: Notification, b: Notification): boolean {
-    return a.equals(b)
+    return a.equals(b);
   }
 
   public static create(notifications?: Notification[]): Notifications {
-    return new Notifications(notifications || [])
+    return new Notifications(notifications || []);
   }
 }

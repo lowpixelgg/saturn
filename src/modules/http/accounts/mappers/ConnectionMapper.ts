@@ -1,5 +1,5 @@
-import { Connection as PersistenceConnection } from '@prisma/client'
-import { Connection } from '@modules/http/accounts/domain/user/Connection'
+import { Connection as PersistenceConnection } from '@prisma/client';
+import { Connection } from '@modules/http/accounts/domain/user/Connection';
 
 export class ConnectionMapper {
   static toDomain(raw: PersistenceConnection) {
@@ -10,9 +10,9 @@ export class ConnectionMapper {
         user_id: raw.user_id,
       },
       raw.id
-    )
+    );
 
-    return connection
+    return connection;
   }
 
   static toPersistence(raw: Connection) {
@@ -21,6 +21,6 @@ export class ConnectionMapper {
       fallback: raw.fallback,
       plataform: raw.plataform,
       user_id: raw.user_id,
-    }
+    };
   }
 }

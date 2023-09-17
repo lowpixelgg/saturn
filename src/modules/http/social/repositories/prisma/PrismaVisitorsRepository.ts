@@ -1,9 +1,9 @@
-import { Profile } from '@modules/http/social/domain/profiles/Profile'
-import { Visitor } from '@modules/http/social/domain/profiles/Visitor'
-import { Visitors } from '@modules/http/social/domain/profiles/Visitors'
-import { VisitorMapper } from '@modules/http/social/mappers/VisitorMapper'
-import { prisma } from '@infra/prisma/prisma-client'
-import { FindByProfileParams, IVisitorRepository } from '../IVisitorRepository'
+import { Profile } from '@modules/http/social/domain/profiles/Profile';
+import { Visitor } from '@modules/http/social/domain/profiles/Visitor';
+import { Visitors } from '@modules/http/social/domain/profiles/Visitors';
+import { VisitorMapper } from '@modules/http/social/mappers/VisitorMapper';
+import { prisma } from '@infra/prisma/prisma-client';
+import { FindByProfileParams, IVisitorRepository } from '../IVisitorRepository';
 
 export class PrismaVisitorsRepository implements IVisitorRepository {
   constructor() {}
@@ -14,13 +14,13 @@ export class PrismaVisitorsRepository implements IVisitorRepository {
       include: {
         visitor: true,
       },
-    })
+    });
 
     if (!dbQuery) {
-      return null
+      return null;
     }
 
-    return VisitorMapper.toDomain(dbQuery)
+    return VisitorMapper.toDomain(dbQuery);
   }
 
   async findAllByProfileParams(
@@ -33,28 +33,28 @@ export class PrismaVisitorsRepository implements IVisitorRepository {
       include: {
         visitor: true,
       },
-    })
+    });
 
     if (!dbQuery) {
-      return null
+      return null;
     }
 
-    return dbQuery.map(visitor => VisitorMapper.toDomain(visitor))
+    return dbQuery.map(visitor => VisitorMapper.toDomain(visitor));
   }
 
   async save(visitors: Visitors): Promise<void> {
     if (visitors.getNewItems().length > 0) {
       const data = visitors
         .getNewItems()
-        .map(visitor => VisitorMapper.toPersistence(visitor))
+        .map(visitor => VisitorMapper.toPersistence(visitor));
 
       await prisma.visitor.createMany({
         data,
-      })
+      });
     }
 
     if (visitors.getRemovedItems().length > 0) {
-      const removeIds = visitors.getRemovedItems().map(visitor => visitor.id)
+      const removeIds = visitors.getRemovedItems().map(visitor => visitor.id);
 
       await prisma.visitor.deleteMany({
         where: {
@@ -62,17 +62,17 @@ export class PrismaVisitorsRepository implements IVisitorRepository {
             in: removeIds,
           },
         },
-      })
+      });
     }
   }
 
   async create(visitors: Visitors): Promise<void> {
     const data = visitors
       .getItems()
-      .map(visitor => VisitorMapper.toPersistence(visitor))
+      .map(visitor => VisitorMapper.toPersistence(visitor));
 
     await prisma.visitor.createMany({
       data,
-    })
+    });
   }
 }

@@ -1,6 +1,6 @@
-import { createAnonymous } from '@utils/tests/UserFactory'
-import { HttpResponse, ok } from '@core/infra/HttpResponse'
-import { Middleware } from '@core/infra/Middleware'
+import { createAnonymous } from '@utils/tests/UserFactory';
+import { HttpResponse, ok } from '@core/infra/HttpResponse';
+import { Middleware } from '@core/infra/Middleware';
 
 export class EnsureAnonymousUserMiddleware implements Middleware {
   constructor() {}
@@ -8,8 +8,8 @@ export class EnsureAnonymousUserMiddleware implements Middleware {
   async handle(): Promise<HttpResponse> {
     const anonymousAccount = createAnonymous({
       features: ['read:activation_token', 'create:session'],
-    }).value
+    }).value;
 
-    return ok({ user: anonymousAccount })
+    return ok({ user: anonymousAccount });
   }
 }

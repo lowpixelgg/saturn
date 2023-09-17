@@ -1,2 +1,2 @@
-import schedule from 'node-schedule'
-export default schedule
+import schedule from 'node-schedule';
+export default schedule;

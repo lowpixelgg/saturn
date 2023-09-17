@@ -1,13 +1,13 @@
-import { Comment as PersistenceComment } from '@prisma/client'
-import { Comment } from '../domain/timeline/Comment'
+import { Comment as PersistenceComment } from '@prisma/client';
+import { Comment } from '../domain/timeline/Comment';
 
 type CommentPersistenceRaw = {
-  id: string
-  authorId: string
-  postId: string
-  content: string
-  createdAt?: Date
-}
+  id: string;
+  authorId: string;
+  postId: string;
+  content: string;
+  createdAt?: Date;
+};
 
 export class CommentMapper {
   static toDomain(raw: PersistenceComment): Comment {
@@ -19,9 +19,9 @@ export class CommentMapper {
         createdAt: raw.createdAt,
       },
       raw.id
-    )
+    );
 
-    return comment
+    return comment;
   }
 
   static toPersistence(raw: CommentPersistenceRaw) {
@@ -31,6 +31,6 @@ export class CommentMapper {
       content: raw.content,
       postId: raw.postId,
       createdAt: raw.createdAt,
-    }
+    };
   }
 }

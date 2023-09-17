@@ -1,8 +1,8 @@
-import rest from '@infra/libs/discord/discordjs'
-import { Routes } from 'discord-api-types/v10'
-import { Client } from 'discord.js'
-import constants from '@configs/constants/discord'
-import { reject } from 'lodash'
+import rest from '@infra/libs/discord/discordjs';
+import { Routes } from 'discord-api-types/v10';
+import { Client } from 'discord.js';
+import constants from '@configs/constants/discord';
+import { reject } from 'lodash';
 
 export default class RESTClient {
   static async channelCreate(com: string): Promise<any> {
@@ -26,13 +26,13 @@ export default class RESTClient {
               ],
             },
           }
-        )
+        );
 
-        return resolve(channel)
+        return resolve(channel);
       } catch (error) {
-        return reject(error)
+        return reject(error);
       }
-    })
+    });
   }
 
   static async channelEditPerms(channelId: string, userId: string) {
@@ -44,13 +44,13 @@ export default class RESTClient {
             allow: '1048576',
             deny: '0',
           },
-        })
+        });
 
-        return resolve(true)
+        return resolve(true);
       } catch (error) {
-        return reject(error)
+        return reject(error);
       }
-    })
+    });
   }
 
   static async sendPrivateMessage(message: string, userId: string) {
@@ -60,7 +60,7 @@ export default class RESTClient {
           body: {
             recipient_id: userId,
           },
-        })) as any
+        })) as any;
 
         await rest.post(Routes.channelMessages(channel.id), {
           body: {
@@ -69,41 +69,41 @@ export default class RESTClient {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
-        })
+        });
 
-        return resolve(channel)
+        return resolve(channel);
       } catch (error) {
-        return reject(error)
+        return reject(error);
       }
-    })
+    });
   }
 
   static async deleteChannel(channelId: string) {
     return new Promise(async (resolve, reject) => {
       try {
-        await rest.delete(Routes.channel(channelId))
+        await rest.delete(Routes.channel(channelId));
 
-        return resolve(true)
+        return resolve(true);
       } catch (error) {
-        return reject(error)
+        return reject(error);
       }
-    })
+    });
   }
 
   static async getMemberGuild(guildId: string, userId: string) {
     return new Promise(async (resolve, reject) => {
       try {
-        const user = await rest.get(Routes.guildMember(guildId, userId))
+        const user = await rest.get(Routes.guildMember(guildId, userId));
 
-        return resolve(user)
+        return resolve(user);
       } catch (error) {
-        return reject(error)
+        return reject(error);
       }
-    })
+    });
   }
 
   static async prepare(client: Client) {
-    client.login(process.env.BOT_DISCORD_TOKEN)
+    client.login(process.env.BOT_DISCORD_TOKEN);
   }
 
   static async sendMessage(message: string, channelId: string) {
@@ -113,13 +113,13 @@ export default class RESTClient {
           body: {
             content: message,
           },
-        })
+        });
 
-        return resolve(msg)
+        return resolve(msg);
       } catch (error) {
-        return reject(error)
+        return reject(error);
       }
-    })
+    });
   }
 
   static async addGuildMember(
@@ -133,13 +133,13 @@ export default class RESTClient {
           body: {
             access_token,
           },
-        })
+        });
 
-        return resolve(guild)
+        return resolve(guild);
       } catch (error) {
-        return reject(error)
+        return reject(error);
       }
-    })
+    });
   }
 
   static async removeGuildMember(
@@ -153,13 +153,13 @@ export default class RESTClient {
           body: {
             access_token,
           },
-        })
+        });
 
-        return resolve(guild)
+        return resolve(guild);
       } catch (error) {
-        return reject(error)
+        return reject(error);
       }
-    })
+    });
   }
 
   static async addGuildMemberRole(
@@ -171,12 +171,12 @@ export default class RESTClient {
       try {
         const role = await rest.put(
           Routes.guildMemberRole(guildId, userId, roleId)
-        )
+        );
 
-        return resolve(role)
+        return resolve(role);
       } catch (error) {
-        return reject(error)
+        return reject(error);
       }
-    })
+    });
   }
 }

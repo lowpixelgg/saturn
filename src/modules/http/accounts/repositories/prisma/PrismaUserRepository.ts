@@ -1,10 +1,10 @@
-import { prisma } from '@infra/prisma/prisma-client'
-import { UserMapper } from '@modules/http/accounts/mappers/UserMapper'
-import { IUserRepository } from '@modules/http/accounts/repositories/IUserRepository'
-import { User } from '@modules/http/accounts/domain/user/user'
-import { INotificationsRepository } from '../INotificationsRepository'
-import { IConnectionsRepository } from '../IConnectionsRepository'
-import { ITokensRepository } from '../ITokensRepository'
+import { prisma } from '@infra/prisma/prisma-client';
+import { UserMapper } from '@modules/http/accounts/mappers/UserMapper';
+import { IUserRepository } from '@modules/http/accounts/repositories/IUserRepository';
+import { User } from '@modules/http/accounts/domain/user/user';
+import { INotificationsRepository } from '../INotificationsRepository';
+import { IConnectionsRepository } from '../IConnectionsRepository';
+import { ITokensRepository } from '../ITokensRepository';
 
 const avatars: string[] = [
   'https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/downloads/buddyiconsconavatars/v_igg1_256x256.jpg',
@@ -21,7 +21,7 @@ const avatars: string[] = [
   'https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/downloads/buddyiconsconavatars/v_importexport_importexport_256x256.jpg',
   'https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/downloads/buddyiconsconavatars/v_executives_robe_256x256.jpg',
   'https://media-rockstargames-com.akamaized.net/rockstargames-newsite/img/global/downloads/buddyiconsconavatars/v_heists_balaclava_256x256.jpg',
-]
+];
 
 export class PrismaUserRepository implements IUserRepository {
   constructor(
@@ -35,19 +35,15 @@ export class PrismaUserRepository implements IUserRepository {
       where: {
         OR: [{ email: userOrEmail }, { username: userOrEmail }],
       },
-    })
+    });
 
-    return !!dbQuery
+    return !!dbQuery;
   }
 
   async findOne(ident: string): Promise<User> {
     const dbQuery = await prisma.user.findFirst({
       where: {
-        OR: [
-          { email: ident },
-          { username: ident },
-          { id: ident },
-        ],
+        OR: [{ email: ident }, { username: ident }, { id: ident }],
       },
       include: {
         Profile: true,
@@ -61,17 +57,17 @@ export class PrismaUserRepository implements IUserRepository {
           },
         },
       },
-    })
+    });
 
     if (!dbQuery) {
-      return null
+      return null;
     }
 
-    return UserMapper.toDomain(dbQuery)
+    return UserMapper.toDomain(dbQuery);
   }
 
   async save(user: User): Promise<void> {
-    const data = await UserMapper.toPersistence(user)
+    const data = await UserMapper.toPersistence(user);
 
     await prisma.user.update({
       where: {
@@ -80,23 +76,23 @@ export class PrismaUserRepository implements IUserRepository {
       data: {
         ...data,
       },
-    })
+    });
 
     if (this.notificationsRepository) {
-      this.notificationsRepository.save(user.notifications)
+      this.notificationsRepository.save(user.notifications);
     }
 
     if (this.connectionsRepository) {
-      this.connectionsRepository.save(user.connections)
+      this.connectionsRepository.save(user.connections);
     }
 
     if (this.tokensRepository) {
-      this.tokensRepository.save(user.tokens)
+      this.tokensRepository.save(user.tokens);
     }
   }
 
   async create(user: User): Promise<void> {
-    const data = await UserMapper.toPersistence(user)
+    const data = await UserMapper.toPersistence(user);
 
     await prisma.user.create({
       data: {
@@ -110,18 +106,18 @@ export class PrismaUserRepository implements IUserRepository {
           },
         },
       },
-    })
+    });
 
     if (this.notificationsRepository) {
-      this.notificationsRepository.create(user.notifications)
+      this.notificationsRepository.create(user.notifications);
     }
 
     if (this.connectionsRepository) {
-      this.connectionsRepository.create(user.connections)
+      this.connectionsRepository.create(user.connections);
     }
 
     if (this.tokensRepository) {
-      this.tokensRepository.create(user.tokens)
+      this.tokensRepository.create(user.tokens);
     }
   }
 }

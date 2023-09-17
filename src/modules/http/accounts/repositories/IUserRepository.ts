@@ -1,10 +1,10 @@
-import { User } from '@modules/http/accounts/domain/user/user'
+import { User } from '@modules/http/accounts/domain/user/user';
 
 export interface IUserRepository {
-  exists(email: string): Promise<boolean>
-  findOne(email: string): Promise<User>
-  create(dto: User): Promise<void>
-  save(user: User): Promise<void>
+  exists(email: string): Promise<boolean>;
+  findOne(email: string): Promise<User>;
+  create(dto: User): Promise<void>;
+  save(user: User): Promise<void>;
 
   // // activate account
   // createActivationToken(userid: string): Promise<activation_token>

@@ -1,19 +1,19 @@
-import { IPostsRepository } from '@modules/http/social/repositories/IPostsRespository'
-import { Controller } from '@core/infra/Controller'
+import { IPostsRepository } from '@modules/http/social/repositories/IPostsRespository';
+import { Controller } from '@core/infra/Controller';
 import {
   clientError,
   HttpResponse,
   notFound,
   ok,
-} from '@core/infra/HttpResponse'
-import { LikePostDoesNotExist } from './errors/LikePostDoesNotExist'
-import { LikePost } from './LikePost'
+} from '@core/infra/HttpResponse';
+import { LikePostDoesNotExist } from './errors/LikePostDoesNotExist';
+import { LikePost } from './LikePost';
 
 type LikePostRequest = {
-  postId: string
-  user: { id: string }
-  unlike: boolean
-}
+  postId: string;
+  user: { id: string };
+  unlike: boolean;
+};
 
 export class LikePostController implements Controller {
   constructor(private likePost: LikePost) {}
@@ -27,19 +27,19 @@ export class LikePostController implements Controller {
       authorId: user.id,
       postId,
       unlike: Boolean(unlike),
-    })
+    });
 
     if (result.isLeft()) {
-      const error = result.value
+      const error = result.value;
 
       switch (error.constructor) {
         case LikePostDoesNotExist:
-          return notFound(error)
+          return notFound(error);
         default:
-          return clientError(error)
+          return clientError(error);
       }
     } else {
-      return ok(result.value)
+      return ok(result.value);
     }
   }
 }

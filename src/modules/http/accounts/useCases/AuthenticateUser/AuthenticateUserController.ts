@@ -1,5 +1,5 @@
-import { Controller } from '@core/infra/Controller'
-import { PermissionDenied } from '@infra/http/errors/PermissionDenied'
+import { Controller } from '@core/infra/Controller';
+import { PermissionDenied } from '@infra/http/errors/PermissionDenied';
 import {
   HttpResponse,
   ok,
@@ -8,15 +8,15 @@ import {
   clientError,
   forbidden,
   unauthorized,
-} from '@core/infra/HttpResponse'
+} from '@core/infra/HttpResponse';
 
-import { AuthenticateUser } from './AuthenticateUser'
-import { AccountDoesNotExist } from './errors/AccountDoesNotExist'
-import { AccountInvalidPassword } from './errors/AccountInvalidPassword'
+import { AuthenticateUser } from './AuthenticateUser';
+import { AccountDoesNotExist } from './errors/AccountDoesNotExist';
+import { AccountInvalidPassword } from './errors/AccountInvalidPassword';
 
 type AuthenticateUserRequest = {
-  authorization: string
-}
+  authorization: string;
+};
 
 export class AuthenticateUserController implements Controller {
   constructor(private authenticateUser: AuthenticateUser) {}
@@ -28,30 +28,30 @@ export class AuthenticateUserController implements Controller {
       // TODO: Add validation
       const result = await this.authenticateUser.execute({
         buffer: authorization,
-      })
+      });
 
       if (result.isLeft()) {
-        const error = result.value
+        const error = result.value;
 
         switch (error.constructor) {
           case AccountInvalidPassword:
-            return unauthorized(error)
+            return unauthorized(error);
           case AccountDoesNotExist:
-            return notFound(error)
+            return notFound(error);
           case PermissionDenied:
-            return forbidden(error)
+            return forbidden(error);
           default:
-            return clientError(error)
+            return clientError(error);
         }
       } else {
-        const { token } = result.value
+        const { token } = result.value;
 
         return ok({
           token,
-        })
+        });
       }
     } catch (err) {
-      return fail(err)
+      return fail(err);
     }
   }
 }

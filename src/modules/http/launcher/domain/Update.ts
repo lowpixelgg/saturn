@@ -1,5 +1,5 @@
-import { Entity } from "@core/domain/Entity";
-import { v4 } from "uuid";
+import { Entity } from '@core/domain/Entity';
+import { v4 } from 'uuid';
 
 interface IUpdateProps {
   product: string;
@@ -10,7 +10,6 @@ interface IUpdateProps {
   directory: string;
   release: string;
 }
-
 
 export class Update extends Entity<IUpdateProps> {
   get product() {
@@ -40,7 +39,6 @@ export class Update extends Entity<IUpdateProps> {
   get release() {
     return this.props.release;
   }
-
 
   private constructor(props: IUpdateProps, id?: string) {
     super(props, id);

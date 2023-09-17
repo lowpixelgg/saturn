@@ -1,18 +1,18 @@
-import { Either, left, right } from '@core/logic/Either'
-import { Connection } from '@modules/http/accounts/domain/user/Connection'
-import { IConnectionsRepository } from '@modules/http/accounts/repositories/IConnectionsRepository'
-import { IUserRepository } from '@modules/http/accounts/repositories/IUserRepository'
-import { DiscordConnectionAccountNotFound } from './errors/DiscordConnectionAccountNotFound'
-import { DiscordConnectionAlreadySync } from './errors/DiscordConnectionAlreadySync'
-import { DiscordConnectionRequestError } from './errors/DiscordConnectionRequestError'
-import * as Discord from '@infra/services/discord'
-import { DiscordConnectionNotAvailable } from './errors/DiscordConnectionNotAvailable'
-import constants from '@configs/constants/discord'
+import { Either, left, right } from '@core/logic/Either';
+import { Connection } from '@modules/http/accounts/domain/user/Connection';
+import { IConnectionsRepository } from '@modules/http/accounts/repositories/IConnectionsRepository';
+import { IUserRepository } from '@modules/http/accounts/repositories/IUserRepository';
+import { DiscordConnectionAccountNotFound } from './errors/DiscordConnectionAccountNotFound';
+import { DiscordConnectionAlreadySync } from './errors/DiscordConnectionAlreadySync';
+import { DiscordConnectionRequestError } from './errors/DiscordConnectionRequestError';
+import * as Discord from '@infra/services/discord';
+import { DiscordConnectionNotAvailable } from './errors/DiscordConnectionNotAvailable';
+import constants from '@configs/constants/discord';
 
 type DiscordConnectionRequest = {
-  user: { id: string }
-  code: string
-}
+  user: { id: string };
+  code: string;
+};
 
 type DiscordConnectionRequestResponse = Either<
   | DiscordConnectionRequestError
@@ -20,7 +20,7 @@ type DiscordConnectionRequestResponse = Either<
   | DiscordConnectionNotAvailable
   | DiscordConnectionAlreadySync,
   boolean
->
+>;
 
 export class DiscordConnection {
   constructor(
@@ -32,27 +32,27 @@ export class DiscordConnection {
     code,
     user,
   }: DiscordConnectionRequest): Promise<DiscordConnectionRequestResponse> {
-    const account = await this.usersRepository.findOne(user.id)
+    const account = await this.usersRepository.findOne(user.id);
 
     if (!account) {
-      return left(new DiscordConnectionAccountNotFound())
+      return left(new DiscordConnectionAccountNotFound());
     }
 
     const exists = await this.connectionsRepository.getByUserAndPlataform(
       account.id,
       'Discord'
-    )
+    );
 
     if (exists) {
-      return left(new DiscordConnectionAlreadySync())
+      return left(new DiscordConnectionAlreadySync());
     }
 
     const { access_token, refresh_token } = await Discord.OAUTH2.getTokenByCode(
       code
-    )
+    );
 
     if (!access_token) {
-      return left(new DiscordConnectionRequestError())
+      return left(new DiscordConnectionRequestError());
     }
 
     // const member = await Discord.OAUTH2.me(access_token)
@@ -78,10 +78,10 @@ export class DiscordConnection {
       plataform: 'Discord',
       fallback: refresh_token,
       user_id: user.id,
-    })
+    });
 
-    account.addConnection(connection)
-    await this.usersRepository.save(account)
+    account.addConnection(connection);
+    await this.usersRepository.save(account);
 
     return right(true);
   }

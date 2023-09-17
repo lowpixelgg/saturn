@@ -1,5 +1,5 @@
-import { Request, Response } from 'express'
-import { Controller } from '@core/infra/Controller'
+import { Request, Response } from 'express';
+import { Controller } from '@core/infra/Controller';
 
 export const adaptRoute = (controller: Controller) => {
   return async (request: Request, response: Response) => {
@@ -9,16 +9,16 @@ export const adaptRoute = (controller: Controller) => {
       ...request.query,
       ...request.headers,
       user: request.user,
-    }
+    };
 
-    const httpResponse = await controller.handle(requestData)
+    const httpResponse = await controller.handle(requestData);
 
     if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-      return response.status(httpResponse.statusCode).json(httpResponse)
+      return response.status(httpResponse.statusCode).json(httpResponse);
     } else {
       return response
         .status(httpResponse.statusCode)
-        .json(httpResponse.body.error)
+        .json(httpResponse.body.error);
     }
-  }
-}
+  };
+};

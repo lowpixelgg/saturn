@@ -1,6 +1,6 @@
-import { Comments } from '../domain/timeline/Comments'
+import { Comments } from '../domain/timeline/Comments';
 
 export default interface ICommentsRepository {
-  create(comments: Comments): Promise<void>
-  save(comments: Comments): Promise<void>
+  create(comments: Comments): Promise<void>;
+  save(comments: Comments): Promise<void>;
 }

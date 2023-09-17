@@ -1,5 +1,5 @@
-import Mail from '@infra/libs/nodemailer/nodemailer'
-import { AppointmentReadyTemplate } from '@templates/AppointmentTemplates/AppointmentReadyTemplate'
+import Mail from '@infra/libs/nodemailer/nodemailer';
+import { AppointmentReadyTemplate } from '@templates/AppointmentTemplates/AppointmentReadyTemplate';
 
 export default {
   key: 'AppointmentReadyMail',
@@ -13,6 +13,6 @@ export default {
       to: `${data.username} <${data.email}>`,
       subject: 'Esta na hora! Entre na chamada da sua entrevista.',
       html: AppointmentReadyTemplate(data.username, data.channelId),
-    })
+    });
   },
-}
+};

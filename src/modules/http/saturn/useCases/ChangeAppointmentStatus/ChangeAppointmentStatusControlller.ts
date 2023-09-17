@@ -1,19 +1,19 @@
-import { Controller } from '@core/infra/Controller'
+import { Controller } from '@core/infra/Controller';
 import {
   clientError,
   HttpResponse,
   notFound,
   ok,
-} from '@core/infra/HttpResponse'
-import { ChangeAppointmentStatus } from './ChangeAppointmentStatus'
-import { AppointmentNotExists } from './errors/AppointmentNotExists'
-import { AppointmentStaffNotExists } from './errors/AppointmentStaffNotExists'
+} from '@core/infra/HttpResponse';
+import { ChangeAppointmentStatus } from './ChangeAppointmentStatus';
+import { AppointmentNotExists } from './errors/AppointmentNotExists';
+import { AppointmentStaffNotExists } from './errors/AppointmentStaffNotExists';
 
 type ChangeAppointmentStatusControllerRequest = {
-  user: { id: string }
-  appointmentId: string
-  action: string
-}
+  user: { id: string };
+  appointmentId: string;
+  action: string;
+};
 
 export class ChangeAppointmentStatusController implements Controller {
   constructor(private CheckInAppointment: ChangeAppointmentStatus) {}
@@ -27,21 +27,21 @@ export class ChangeAppointmentStatusController implements Controller {
       user,
       appointmentId,
       action,
-    })
+    });
 
     if (result.isLeft()) {
-      const error = result.value
+      const error = result.value;
 
       switch (error.constructor) {
         case AppointmentStaffNotExists:
-          return notFound(error)
+          return notFound(error);
         case AppointmentNotExists:
-          return notFound(error)
+          return notFound(error);
         default:
-          return clientError(error)
+          return clientError(error);
       }
     } else {
-      return ok()
+      return ok();
     }
   }
 }

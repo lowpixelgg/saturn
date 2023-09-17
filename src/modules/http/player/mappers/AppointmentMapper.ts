@@ -1,5 +1,5 @@
-import { Appointments as PersistenceAppointment } from '@prisma/client'
-import { Appointment } from '../domain/Appointment'
+import { Appointments as PersistenceAppointment } from '@prisma/client';
+import { Appointment } from '../domain/Appointment';
 
 export class AppointmentMapper {
   static toDomain(raw: PersistenceAppointment) {
@@ -14,9 +14,9 @@ export class AppointmentMapper {
         name: raw.name,
       },
       raw.id
-    )
+    );
 
-    return appointment
+    return appointment;
   }
 
   static toPersistence(appointment: Appointment) {
@@ -29,6 +29,6 @@ export class AppointmentMapper {
       name: appointment.name,
       observation: appointment.observation,
       channelId: appointment.channelId,
-    }
+    };
   }
 }

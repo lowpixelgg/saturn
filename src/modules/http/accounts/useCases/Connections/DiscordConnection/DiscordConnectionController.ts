@@ -1,4 +1,4 @@
-import { Controller } from '@core/infra/Controller'
+import { Controller } from '@core/infra/Controller';
 import {
   clientError,
   conflict,
@@ -7,17 +7,17 @@ import {
   HttpResponse,
   notFound,
   ok,
-} from '@core/infra/HttpResponse'
-import { DiscordConnection } from './DiscordConnection'
-import { DiscordConnectionAccountNotFound } from './errors/DiscordConnectionAccountNotFound'
-import { DiscordConnectionAlreadySync } from './errors/DiscordConnectionAlreadySync'
-import { DiscordConnectionNotAvailable } from './errors/DiscordConnectionNotAvailable'
-import { DiscordConnectionRequestError } from './errors/DiscordConnectionRequestError'
+} from '@core/infra/HttpResponse';
+import { DiscordConnection } from './DiscordConnection';
+import { DiscordConnectionAccountNotFound } from './errors/DiscordConnectionAccountNotFound';
+import { DiscordConnectionAlreadySync } from './errors/DiscordConnectionAlreadySync';
+import { DiscordConnectionNotAvailable } from './errors/DiscordConnectionNotAvailable';
+import { DiscordConnectionRequestError } from './errors/DiscordConnectionRequestError';
 
 type DiscordConnectionRequest = {
-  code: string
-  user: { id: string }
-}
+  code: string;
+  user: { id: string };
+};
 
 export class DiscordConnectionController implements Controller {
   constructor(private discordConnection: DiscordConnection) {}
@@ -29,25 +29,25 @@ export class DiscordConnectionController implements Controller {
     const result = await this.discordConnection.execute({
       code,
       user,
-    })
+    });
 
     if (result.isLeft()) {
-      const error = result.value
+      const error = result.value;
 
       switch (error.constructor) {
         case DiscordConnectionRequestError:
-          return clientError(error)
+          return clientError(error);
         case DiscordConnectionAlreadySync:
-          return conflict(error)
+          return conflict(error);
         case DiscordConnectionAccountNotFound:
-          return notFound(error)
+          return notFound(error);
         case DiscordConnectionNotAvailable:
-          return forbidden(error)
+          return forbidden(error);
         default:
-          return fail(error)
+          return fail(error);
       }
     } else {
-      return ok()
+      return ok();
     }
   }
 }

@@ -1,5 +1,5 @@
-import Mail from '@infra/libs/nodemailer/nodemailer'
-import { RegistrationEmailTemplate } from '@templates/EmailTemplates/RegistrationMailTemplate'
+import Mail from '@infra/libs/nodemailer/nodemailer';
+import { RegistrationEmailTemplate } from '@templates/EmailTemplates/RegistrationMailTemplate';
 
 export default {
   key: 'RegistrationMail',
@@ -13,6 +13,6 @@ export default {
       to: `${data.name} <${data.email}>`,
       subject: 'Ative seu cadastro na Rocket Roleplay',
       html: RegistrationEmailTemplate(data.name, data.activation_token),
-    })
+    });
   },
-}
+};

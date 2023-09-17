@@ -5,4 +5,4 @@ export default {
     user: process.env.MAILER_AUTH_USERNAME,
     pass: process.env.MAILER_AUTH_PASSWORD,
   },
-} as Object
+} as Object;

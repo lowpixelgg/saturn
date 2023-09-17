@@ -1,24 +1,24 @@
-import { Follows } from '@modules/http/social/domain/profiles/Follows'
-import { Profile } from '@modules/http/social/domain/profiles/Profile'
+import { Follows } from '@modules/http/social/domain/profiles/Follows';
+import { Profile } from '@modules/http/social/domain/profiles/Profile';
 import {
   PersistenceProfileRaw,
   ProfileMapper,
-} from '@modules/http/social/mappers/ProfileMapper'
+} from '@modules/http/social/mappers/ProfileMapper';
 import {
   IProfilesRepository,
   SearchResponse,
-} from '@modules/http/social/repositories/IProfilesRepository'
-import { IFollowsRepository } from '../IFollowsRepository'
-import { IVisitorRepository } from '../IVisitorRepository'
+} from '@modules/http/social/repositories/IProfilesRepository';
+import { IFollowsRepository } from '../IFollowsRepository';
+import { IVisitorRepository } from '../IVisitorRepository';
 
 export class InMemoryProfilesRepository implements IProfilesRepository {
-  public items: Profile[] = []
+  public items: Profile[] = [];
 
   constructor(
     private visitorsRepository?: IVisitorRepository,
     private followsRepository?: IFollowsRepository
   ) {
-    const following = Follows.create([])
+    const following = Follows.create([]);
 
     const profile = Profile.create({
       User: {
@@ -59,7 +59,7 @@ export class InMemoryProfilesRepository implements IProfilesRepository {
         },
       ],
       userid: '',
-    })
+    });
 
     const profile2 = Profile.create({
       User: {
@@ -95,50 +95,50 @@ export class InMemoryProfilesRepository implements IProfilesRepository {
       whitelist: '',
       timeout: 0,
       following: [],
-    })
+    });
 
     if (profile.isRight()) {
-      this.items.push(profile.value)
+      this.items.push(profile.value);
     }
 
     if (profile2.isRight()) {
-      this.items.push(profile2.value)
+      this.items.push(profile2.value);
     }
   }
 
   async exists(slugORID: string): Promise<boolean> {
-    const bySLUG = this.items.find(profile => profile.slug === slugORID)
+    const bySLUG = this.items.find(profile => profile.slug === slugORID);
 
     if (bySLUG !== undefined) {
-      return true
+      return true;
     }
 
-    const byID = this.items.find(profile => profile.User.id === slugORID)
+    const byID = this.items.find(profile => profile.User.id === slugORID);
     if (byID) {
-      return true
+      return true;
     }
 
-    return false
+    return false;
   }
 
   async findOne(slugORID: string): Promise<Profile> {
-    const bySLUG = this.items.find(profile => profile.slug === slugORID)
+    const bySLUG = this.items.find(profile => profile.slug === slugORID);
 
     if (bySLUG !== undefined) {
-      return bySLUG
+      return bySLUG;
     }
 
-    const byID = this.items.find(profile => profile.User.id === slugORID)
+    const byID = this.items.find(profile => profile.User.id === slugORID);
 
     if (byID !== undefined) {
-      return byID
+      return byID;
     }
 
-    return null
+    return null;
   }
 
   async findAll(): Promise<Profile[]> {
-    return this.items
+    return this.items;
   }
 
   async search(
@@ -146,35 +146,35 @@ export class InMemoryProfilesRepository implements IProfilesRepository {
     page: number,
     perPage: number
   ): Promise<SearchResponse> {
-    let profileList = this.items
+    let profileList = this.items;
 
     if (query) {
       profileList = this.items.filter(profile => {
-        const search = new RegExp(query, 'i')
+        const search = new RegExp(query, 'i');
 
-        return search.test(profile.User.username)
-      })
+        return search.test(profile.User.username);
+      });
     }
 
     return {
       data: profileList.slice((page - 1) * perPage, page * perPage),
       totalCount: profileList.length,
-    }
+    };
   }
 
   async save(profile: Profile): Promise<void> {
-    const index = this.items.findIndex(find => find.id === profile.User.id)
-    this.items[index] = profile
+    const index = this.items.findIndex(find => find.id === profile.User.id);
+    this.items[index] = profile;
 
     if (profile.visitors) {
       if (this.visitorsRepository) {
-        this.visitorsRepository.save(profile.visitors)
+        this.visitorsRepository.save(profile.visitors);
       }
     }
 
     if (profile.follows) {
       if (this.visitorsRepository) {
-        this.visitorsRepository.create(profile.visitors)
+        this.visitorsRepository.create(profile.visitors);
       }
     }
   }

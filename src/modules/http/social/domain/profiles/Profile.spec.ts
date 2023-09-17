@@ -1,5 +1,5 @@
-import { expect, describe, it } from 'vitest'
-import { Profile } from './Profile'
+import { expect, describe, it } from 'vitest';
+import { Profile } from './Profile';
 
 describe('Social model', () => {
   it('should be able to create new profile', async () => {
@@ -22,8 +22,8 @@ describe('Social model', () => {
       instagram: '',
       timeout: 0,
       userid: '',
-    })
+    });
 
-    expect(userProfile.isRight()).toBeTruthy()
-  })
-})
+    expect(userProfile.isRight()).toBeTruthy();
+  });
+});

@@ -5,31 +5,31 @@ import {
   Connection as PersistencecConnection,
   Staff,
   Appointments,
-} from '@prisma/client'
-import { Password } from '@modules/http/accounts/domain/user/Password'
-import { Name } from '@modules/http/accounts/domain/user/Username'
-import { Email } from '@modules/http/accounts/domain/user/Email'
-import { User } from '@modules/http/accounts/domain/user/user'
-import { UserDetails } from '../dtos/UserDetails'
-import { Notifications } from '../domain/user/Notifications'
-import { NotificationMapper } from './NotificationMappert'
-import { Connections } from '../domain/user/Connections'
-import { Connection } from '../domain/user/Connection'
-import { Appointment } from '@modules/http/player/domain/Appointment'
+} from '@prisma/client';
+import { Password } from '@modules/http/accounts/domain/user/Password';
+import { Name } from '@modules/http/accounts/domain/user/Username';
+import { Email } from '@modules/http/accounts/domain/user/Email';
+import { User } from '@modules/http/accounts/domain/user/user';
+import { UserDetails } from '../dtos/UserDetails';
+import { Notifications } from '../domain/user/Notifications';
+import { NotificationMapper } from './NotificationMappert';
+import { Connections } from '../domain/user/Connections';
+import { Connection } from '../domain/user/Connection';
+import { Appointment } from '@modules/http/player/domain/Appointment';
 
 type PersistenceUserRaw = PersistenceUser & {
-  Connections?: PersistencecConnection[]
-  notifications?: PersistenceNotification[]
-  Profile: Profile
-  appointment?: Appointments
-  Staff: Staff
-}
+  Connections?: PersistencecConnection[];
+  notifications?: PersistenceNotification[];
+  Profile: Profile;
+  appointment?: Appointments;
+  Staff: Staff;
+};
 
 export class UserMapper {
   static toDomain(raw: PersistenceUserRaw): User {
-    const nameOrError = Name.create(raw.username)
-    const emailOrError = Email.create(raw.email)
-    const passwordOrError = Password.create(raw.password, true)
+    const nameOrError = Name.create(raw.username);
+    const emailOrError = Email.create(raw.email);
+    const passwordOrError = Password.create(raw.password, true);
 
     const notificationsErr = raw.notifications
       ? Notifications.create(
@@ -37,25 +37,25 @@ export class UserMapper {
             NotificationMapper.toDomain(notifictation)
           )
         )
-      : Notifications.create([])
+      : Notifications.create([]);
 
     const connectionsOrErr = raw.Connections
       ? Connections.create(
           raw.Connections.map(connection => Connection.create(connection))
         )
-      : Connections.create([])
+      : Connections.create([]);
 
     if (nameOrError.isLeft()) {
-      throw new Error('Name value is invalid.')
+      throw new Error('Name value is invalid.');
     }
 
     if (emailOrError.isLeft()) {
-      console.log(raw.username)
-      throw new Error('Email value is invalid.')
+      console.log(raw.username);
+      throw new Error('Email value is invalid.');
     }
 
     if (passwordOrError.isLeft()) {
-      throw new Error('Password value is invalid.')
+      throw new Error('Password value is invalid.');
     }
 
     const userOrError = User.create(
@@ -77,13 +77,13 @@ export class UserMapper {
         status: raw.status,
       },
       raw.id
-    )
+    );
 
     if (userOrError.isRight()) {
-      return userOrError.value
+      return userOrError.value;
     }
 
-    return null
+    return null;
   }
 
   static toDto(raw: PersistenceUserRaw): UserDetails {
@@ -99,7 +99,7 @@ export class UserMapper {
       auth_system: raw.auth_system,
       timeout: raw.timeout,
       createdAt: raw.createdAt,
-    }
+    };
   }
 
   static async toPersistence(user: User) {
@@ -112,6 +112,6 @@ export class UserMapper {
       auth_system: user.auth_system,
       status: user.status,
       timeout: user.timeout,
-    }
+    };
   }
 }

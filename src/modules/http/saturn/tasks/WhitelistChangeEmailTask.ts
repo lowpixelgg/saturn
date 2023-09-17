@@ -1,5 +1,5 @@
-import Mail from '@infra/libs/nodemailer/nodemailer'
-import { WhitelistChangeStatus } from '@templates/EmailTemplates/WhitelistChangeStatus'
+import Mail from '@infra/libs/nodemailer/nodemailer';
+import { WhitelistChangeStatus } from '@templates/EmailTemplates/WhitelistChangeStatus';
 
 export default {
   key: 'WhitelistChangeEmail',
@@ -13,6 +13,6 @@ export default {
       to: `${data.name} <${data.email}>`,
       subject: 'A sua whitelist mudou de status.',
       html: WhitelistChangeStatus(data.name),
-    })
+    });
   },
-}
+};

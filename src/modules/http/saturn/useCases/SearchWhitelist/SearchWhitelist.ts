@@ -1,17 +1,17 @@
-import { Whitelist } from '@modules/http/player/domain/Whitelist'
-import { IWhitelistRepository } from '@modules/http/player/repositories/IWhitelistRepository'
-import { PrismaWhitelistRepository } from '@modules/http/player/repositories/prisma/PrismaWhitelistRepository'
+import { Whitelist } from '@modules/http/player/domain/Whitelist';
+import { IWhitelistRepository } from '@modules/http/player/repositories/IWhitelistRepository';
+import { PrismaWhitelistRepository } from '@modules/http/player/repositories/prisma/PrismaWhitelistRepository';
 
 type SearchWhitelistRequest = {
-  query?: string
-  page?: number
-  perPage?: number
-}
+  query?: string;
+  page?: number;
+  perPage?: number;
+};
 
 type SearchWhitelistResponse = {
-  data: Whitelist[]
-  totalCount: number
-}
+  data: Whitelist[];
+  totalCount: number;
+};
 
 export class SearchWhitelist {
   constructor(private whitelistRepository: IWhitelistRepository) {}
@@ -25,8 +25,8 @@ export class SearchWhitelist {
       query,
       page,
       perPage
-    )
+    );
 
-    return { data, totalCount }
+    return { data, totalCount };
   }
 }

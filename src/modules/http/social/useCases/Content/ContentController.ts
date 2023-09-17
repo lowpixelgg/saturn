@@ -1,25 +1,25 @@
-import { User } from '@modules/http/accounts/domain/user/user'
-import { Controller } from '@core/infra/Controller'
+import { User } from '@modules/http/accounts/domain/user/user';
+import { Controller } from '@core/infra/Controller';
 import {
   clientError,
   fail,
   HttpResponse,
   notFound,
   ok,
-} from '@core/infra/HttpResponse'
-import { request } from 'express'
-import { ContentAvatar } from './Avatar'
-import { ContentBanner } from './Banner'
-import { ContentAvatarError } from './errors/ContentAvatarError'
-import { ContentUserNotExist } from './errors/ContentUserNotExist'
+} from '@core/infra/HttpResponse';
+import { request } from 'express';
+import { ContentAvatar } from './Avatar';
+import { ContentBanner } from './Banner';
+import { ContentAvatarError } from './errors/ContentAvatarError';
+import { ContentUserNotExist } from './errors/ContentUserNotExist';
 
 type ContentAvatarRequest = {
-  image: string
-  extension: string
-  avatar: boolean
-  banner: boolean
-  user: { id: string }
-}
+  image: string;
+  extension: string;
+  avatar: boolean;
+  banner: boolean;
+  user: { id: string };
+};
 
 export class ContentController implements Controller {
   constructor(
@@ -36,20 +36,20 @@ export class ContentController implements Controller {
       image,
       extension,
       id,
-    })
+    });
 
     if (result.isLeft()) {
-      const error = result.value
+      const error = result.value;
       switch (error.constructor) {
         case ContentAvatarError:
-          return clientError(error)
+          return clientError(error);
         case ContentUserNotExist:
-          return notFound(error)
+          return notFound(error);
         default:
-          return fail(error)
+          return fail(error);
       }
     } else {
-      return ok(result.value)
+      return ok(result.value);
     }
   }
 
@@ -62,20 +62,20 @@ export class ContentController implements Controller {
       image,
       extension,
       id,
-    })
+    });
 
     if (result.isLeft()) {
-      const error = result.value
+      const error = result.value;
       switch (error.constructor) {
         case ContentAvatarError:
-          return clientError(error)
+          return clientError(error);
         case ContentUserNotExist:
-          return notFound(error)
+          return notFound(error);
         default:
-          return fail(error)
+          return fail(error);
       }
     } else {
-      return ok(result.value)
+      return ok(result.value);
     }
   }
 
@@ -87,11 +87,11 @@ export class ContentController implements Controller {
     user,
   }: ContentAvatarRequest): Promise<HttpResponse> {
     if (Boolean(avatar)) {
-      return this.handleUpdateAvatar(image, extension, user.id)
+      return this.handleUpdateAvatar(image, extension, user.id);
     } else if (Boolean(banner)) {
-      return this.handleUpdateBanner(image, extension, user.id)
+      return this.handleUpdateBanner(image, extension, user.id);
     } else {
-      return ok({})
+      return ok({});
     }
   }
 }

@@ -1,24 +1,27 @@
-import { Post } from '@modules/http/social/domain/timeline/Post'
-import { CommentMapper } from '@modules/http/social/mappers/CommentMapper'
-import { LikeMapper } from '@modules/http/social/mappers/LikeMapper'
-import { IPostsRepository } from '@modules/http/social/repositories/IPostsRespository'
-import { IProfilesRepository } from '@modules/http/social/repositories/IProfilesRepository'
-import { Either, left, right } from '@core/logic/Either'
-import { SearchPostUserNotFound } from './errors/SearchPostUserNotFound'
+import { Post } from '@modules/http/social/domain/timeline/Post';
+import { CommentMapper } from '@modules/http/social/mappers/CommentMapper';
+import { LikeMapper } from '@modules/http/social/mappers/LikeMapper';
+import { IPostsRepository } from '@modules/http/social/repositories/IPostsRespository';
+import { IProfilesRepository } from '@modules/http/social/repositories/IProfilesRepository';
+import { Either, left, right } from '@core/logic/Either';
+import { SearchPostUserNotFound } from './errors/SearchPostUserNotFound';
 
 type SearchPostsRequest = {
-  user: { id: string }
-  query?: string
-  page?: number
-  perPage?: number
-}
+  user: { id: string };
+  query?: string;
+  page?: number;
+  perPage?: number;
+};
 
 type SearchPostsResponse = {
-  data: Object[]
-  totalCount: number
-}
+  data: Object[];
+  totalCount: number;
+};
 
-type PromiseSearchResponse = Either<SearchPostUserNotFound, SearchPostsResponse>
+type PromiseSearchResponse = Either<
+  SearchPostUserNotFound,
+  SearchPostsResponse
+>;
 
 export class SearchPosts {
   constructor(
@@ -32,17 +35,17 @@ export class SearchPosts {
     page = 1,
     perPage = 19700,
   }: SearchPostsRequest): Promise<PromiseSearchResponse> {
-    const exists = await this.profilesRepository.exists(user.id)
+    const exists = await this.profilesRepository.exists(user.id);
 
     if (!exists) {
-      return left(new SearchPostUserNotFound())
+      return left(new SearchPostUserNotFound());
     }
 
     const { data, totalCount } = await this.postsRepository.search(
       query,
       page,
       perPage
-    )
+    );
 
     const posts = data.map(post => ({
       _id: post.id,
@@ -57,8 +60,8 @@ export class SearchPosts {
         post.Likes.getItems().find(like => like.authorId === user.id)
       ),
       createdAt: post.createdAt,
-    }))
+    }));
 
-    return right({ data: posts, totalCount })
+    return right({ data: posts, totalCount });
   }
 }

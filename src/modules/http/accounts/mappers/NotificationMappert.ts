@@ -1,5 +1,5 @@
-import { Notification as PersistenceNotification } from '@prisma/client'
-import { Notification } from '../domain/user/Notification'
+import { Notification as PersistenceNotification } from '@prisma/client';
+import { Notification } from '../domain/user/Notification';
 
 export class NotificationMapper {
   static toDomain(raw: PersistenceNotification) {
@@ -12,9 +12,9 @@ export class NotificationMapper {
         userid: raw.userid,
       },
       raw.id
-    )
+    );
 
-    return notify
+    return notify;
   }
 
   static toPersistence(raw: Notification) {
@@ -25,6 +25,6 @@ export class NotificationMapper {
       content: raw.content,
       title: raw.title,
       userid: raw.userid,
-    }
+    };
   }
 }

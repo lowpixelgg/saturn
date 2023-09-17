@@ -1,25 +1,25 @@
-import { Email } from '@modules/http/accounts/domain/user/Email'
-import { Name } from '@modules/http/accounts/domain/user/Username'
-import { Password } from '@modules/http/accounts/domain/user/Password'
-import { User } from '@modules/http/accounts/domain/user/user'
-import { JWT } from '@modules/http/accounts/domain/user/jwt'
-import { Profile } from '@modules/http/social/domain/profiles/Profile'
+import { Email } from '@modules/http/accounts/domain/user/Email';
+import { Name } from '@modules/http/accounts/domain/user/Username';
+import { Password } from '@modules/http/accounts/domain/user/Password';
+import { User } from '@modules/http/accounts/domain/user/user';
+import { JWT } from '@modules/http/accounts/domain/user/jwt';
+import { Profile } from '@modules/http/social/domain/profiles/Profile';
 
 type UserOverrides = {
-  username?: string
-  email?: string
-  password?: string
-  features?: string[]
-  timeout?: number
-  status?: string
-  Profile?: Profile
-}
+  username?: string;
+  email?: string;
+  password?: string;
+  features?: string[];
+  timeout?: number;
+  status?: string;
+  Profile?: Profile;
+};
 
 export function createUser(overrides?: UserOverrides) {
-  const username = Name.create(overrides?.username ?? 'JohnDoe').value as Name
-  const email = Email.create(overrides?.email ?? 'john@doe.com').value as Email
+  const username = Name.create(overrides?.username ?? 'JohnDoe').value as Name;
+  const email = Email.create(overrides?.email ?? 'john@doe.com').value as Email;
   const password = Password.create(overrides?.password ?? '123456')
-    .value as Password
+    .value as Password;
 
   const user = User.create({
     username,
@@ -28,44 +28,44 @@ export function createUser(overrides?: UserOverrides) {
     timeout: overrides?.timeout,
     status: overrides?.status,
     features: overrides?.features,
-  })
+  });
 
-  return user.value as User
+  return user.value as User;
 }
 
 export function createAnonymous(overrides?: UserOverrides) {
-  const username = Name.create('JohnDoe').value as Name
-  const email = Email.create(overrides?.email ?? 'john@doe.com').value as Email
+  const username = Name.create('JohnDoe').value as Name;
+  const email = Email.create(overrides?.email ?? 'john@doe.com').value as Email;
   const password = Password.create(overrides?.password ?? '123456')
-    .value as Password
+    .value as Password;
 
   const user = User.create({
     username,
     email,
     password,
     features: overrides?.features,
-  })
+  });
 
-  return user
+  return user;
 }
 
 export function createAndAuthenticateUser() {
-  const username = Name.create('John Doe').value as Name
-  const email = Email.create('johndoe@example.com').value as Email
-  const password = Password.create('johndoe123').value as Password
+  const username = Name.create('John Doe').value as Name;
+  const email = Email.create('johndoe@example.com').value as Email;
+  const password = Password.create('johndoe123').value as Password;
 
   const user = User.create({
     username,
     email,
     password,
-  }).value as User
+  }).value as User;
 
-  const jwt = JWT.sign('1d', user)
+  const jwt = JWT.sign('1d', user);
 
   return {
     user,
     jwt,
-  }
+  };
 }
 
 export function createdUserWithProfile() {
@@ -102,7 +102,7 @@ export function createdUserWithProfile() {
     whitelist: '',
     timeout: 0,
     userid: '',
-  }).value as Profile
+  }).value as Profile;
 
-  return { profileOrErr }
+  return { profileOrErr };
 }

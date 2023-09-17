@@ -1,11 +1,11 @@
-import { Profile, Visitor as PersistenceVisitor } from '@prisma/client'
+import { Profile, Visitor as PersistenceVisitor } from '@prisma/client';
 
-import { Visitor } from '../domain/profiles/Visitor'
+import { Visitor } from '../domain/profiles/Visitor';
 
 type PersistenceVisitorRaw = PersistenceVisitor & {
-  visitor: Profile
-  at: Date
-}
+  visitor: Profile;
+  at: Date;
+};
 
 export class VisitorMapper {
   static toDomain(raw: PersistenceVisitorRaw): Visitor {
@@ -17,9 +17,9 @@ export class VisitorMapper {
         at: raw.at,
       },
       raw.id
-    )
+    );
 
-    return subscription
+    return subscription;
   }
 
   static toPersistence(visitor: Visitor) {
@@ -29,6 +29,6 @@ export class VisitorMapper {
       visitor_id: visitor.visitor_id,
       visitor: visitor.visitor,
       at: visitor.at,
-    }
+    };
   }
 }

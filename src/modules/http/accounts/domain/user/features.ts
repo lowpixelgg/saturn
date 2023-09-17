@@ -35,22 +35,22 @@ const availableFeatures = new Set([
   'create:comment',
   'update:post',
   'delete:post',
-])
+]);
 
 export class FeatureFlags {
   static can(userFeatures: string[], feature: string) {
     if (!userFeatures.includes(feature)) {
-      return false
+      return false;
     }
 
-    return true
+    return true;
   }
 
   static has(feature: string) {
     if (!availableFeatures.has(feature)) {
-      return false
+      return false;
     } else {
-      return true
+      return true;
     }
   }
 }

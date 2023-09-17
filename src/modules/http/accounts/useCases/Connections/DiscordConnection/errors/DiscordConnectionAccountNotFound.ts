@@ -1,4 +1,4 @@
-import { DomainError } from '@core/domain/errors/DomainError'
+import { DomainError } from '@core/domain/errors/DomainError';
 
 export class DiscordConnectionAccountNotFound
   extends Error
@@ -7,7 +7,7 @@ export class DiscordConnectionAccountNotFound
   constructor() {
     super(
       `CORE:ACCOUNTS:USECASES:CONNECTIONS:DISCORD_CONNECTION:DISCORD_CONNECTION_ACCOUNT_NOT_FOUND`
-    )
-    this.name = 'DiscordConnectionAccountNotFound'
+    );
+    this.name = 'DiscordConnectionAccountNotFound';
   }
 }

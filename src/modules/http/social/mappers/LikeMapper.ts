@@ -1,12 +1,12 @@
-import { Likes as PersistenceLike } from '@prisma/client'
-import { Like } from '../domain/timeline/Like'
+import { Likes as PersistenceLike } from '@prisma/client';
+import { Like } from '../domain/timeline/Like';
 
 type LikePersistenceRaw = {
-  id: string
-  authorId: string
-  postId: string
-  createdAt?: Date
-}
+  id: string;
+  authorId: string;
+  postId: string;
+  createdAt?: Date;
+};
 
 export class LikeMapper {
   static toDomain(raw: PersistenceLike): Like {
@@ -17,9 +17,9 @@ export class LikeMapper {
         createdAt: raw.createdAt,
       },
       raw.id
-    )
+    );
 
-    return like
+    return like;
   }
 
   static toPersistence(like: LikePersistenceRaw) {
@@ -27,6 +27,6 @@ export class LikeMapper {
       id: like.id,
       authorId: like.authorId,
       postId: like.postId,
-    }
+    };
   }
 }

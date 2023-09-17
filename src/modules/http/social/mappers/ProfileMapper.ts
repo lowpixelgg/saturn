@@ -4,34 +4,34 @@ import {
   Medals,
   Profile as ProfileRaw,
   User,
-} from '@prisma/client'
-import { Follows } from '../domain/profiles/Follows'
-import { FollowMapper } from './FollowMapper'
-import { Profile } from '../domain/profiles/Profile'
-import { Follow } from '../domain/profiles/Follow'
+} from '@prisma/client';
+import { Follows } from '../domain/profiles/Follows';
+import { FollowMapper } from './FollowMapper';
+import { Profile } from '../domain/profiles/Profile';
+import { Follow } from '../domain/profiles/Follow';
 
 export type PersistenceProfileRaw = ProfileRaw & {
-  user?: User
-  following?: Follower[]
-  followers?: Follower[]
-  badges?: Badges[]
-  medals?: Medals[]
-}
+  user?: User;
+  following?: Follower[];
+  followers?: Follower[];
+  badges?: Badges[];
+  medals?: Medals[];
+};
 
 type topPeristenceRaw = {
-  avatar: string
-  banner: string
-  region_city: string
-  region_uf: string
-  region_country: string
-  status: string
-  nickname: string
-  description: string
-  youtube: string
-  twitch: string
-  instagram: string
-  slug: string
-}
+  avatar: string;
+  banner: string;
+  region_city: string;
+  region_uf: string;
+  region_country: string;
+  status: string;
+  nickname: string;
+  description: string;
+  youtube: string;
+  twitch: string;
+  instagram: string;
+  slug: string;
+};
 
 export class ProfileMapper {
   static toDomain(raw: PersistenceProfileRaw): Profile {
@@ -59,13 +59,13 @@ export class ProfileMapper {
         userid: '', // remove
       },
       raw.id
-    )
+    );
 
     if (profileOrError.isRight()) {
-      return profileOrError.value
+      return profileOrError.value;
     }
 
-    return null
+    return null;
   }
 
   static toPersistence(raw: topPeristenceRaw) {
@@ -82,6 +82,6 @@ export class ProfileMapper {
       twitch: raw.twitch,
       instagram: raw.instagram,
       slug: raw.slug,
-    }
+    };
   }
 }

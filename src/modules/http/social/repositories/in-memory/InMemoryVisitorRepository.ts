@@ -1,19 +1,19 @@
-import { Visitor } from '../../domain/profiles/Visitor'
-import { Visitors } from '../../domain/profiles/Visitors'
+import { Visitor } from '../../domain/profiles/Visitor';
+import { Visitors } from '../../domain/profiles/Visitors';
 
-import { FindByProfileParams, IVisitorRepository } from '../IVisitorRepository'
+import { FindByProfileParams, IVisitorRepository } from '../IVisitorRepository';
 
 export class InMemoryVisitorRepository implements IVisitorRepository {
-  public items: Visitor[] = []
+  public items: Visitor[] = [];
 
   constructor() {}
 
   async findByProfileParams(params: FindByProfileParams): Promise<Visitor> {
     const visitor = this.items.find(
       item => item.visitor_id === params.visitors_id
-    )
+    );
 
-    return visitor
+    return visitor;
   }
 
   async findAllByProfileParams(
@@ -21,24 +21,24 @@ export class InMemoryVisitorRepository implements IVisitorRepository {
   ): Promise<Visitor[]> {
     const visitor = this.items.filter(
       item => item.visitor_id === params.visitors_id
-    )
+    );
 
-    return visitor
+    return visitor;
   }
 
   async save(visitors: Visitors): Promise<void> {
-    this.items.push(...visitors.getNewItems())
+    this.items.push(...visitors.getNewItems());
 
     visitors.getRemovedItems().forEach(visitor => {
       const visitorIndex = this.items.findIndex(visitorItem => {
-        return visitorItem.id === visitor.id
-      })
+        return visitorItem.id === visitor.id;
+      });
 
-      this.items.splice(visitorIndex, 1)
-    })
+      this.items.splice(visitorIndex, 1);
+    });
   }
 
   async create(visitors: Visitors): Promise<void> {
-    this.items.push(...visitors.getItems())
+    this.items.push(...visitors.getItems());
   }
 }

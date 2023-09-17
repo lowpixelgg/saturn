@@ -1,17 +1,17 @@
-import { InMemoryProfilesRepository } from '@modules/http/social/repositories/in-memory/InMemoryProfilesRepository'
-import { IProfilesRepository } from '@modules/http/social/repositories/IProfilesRepository'
-import { expect, describe, it, beforeEach } from 'vitest'
+import { InMemoryProfilesRepository } from '@modules/http/social/repositories/in-memory/InMemoryProfilesRepository';
+import { IProfilesRepository } from '@modules/http/social/repositories/IProfilesRepository';
+import { expect, describe, it, beforeEach } from 'vitest';
 
-import { UpdateProfile } from './UpdateProfile'
+import { UpdateProfile } from './UpdateProfile';
 
-let profilesRespository: IProfilesRepository
-let updateProfile: UpdateProfile
+let profilesRespository: IProfilesRepository;
+let updateProfile: UpdateProfile;
 
 describe('UpdateProfile', () => {
   beforeEach(() => {
-    profilesRespository = new InMemoryProfilesRepository()
-    updateProfile = new UpdateProfile(profilesRespository)
-  })
+    profilesRespository = new InMemoryProfilesRepository();
+    updateProfile = new UpdateProfile(profilesRespository);
+  });
 
   it('should be able to update user-profile / social', async () => {
     const update = await updateProfile.execute({
@@ -23,7 +23,7 @@ describe('UpdateProfile', () => {
       slug: 'negodoborel',
       status: 'I living on New York',
       action: 'update:social',
-    })
+    });
 
     const updateAbout = await updateProfile.execute({
       user: { id: '12345' },
@@ -32,11 +32,11 @@ describe('UpdateProfile', () => {
       youtube: 'https://google.com',
       twitch: 'https://google.com',
       action: 'update:bio',
-    })
+    });
 
-    expect(updateAbout.isRight()).toBeTruthy()
-    expect(update.isRight()).toBeTruthy()
-  })
+    expect(updateAbout.isRight()).toBeTruthy();
+    expect(update.isRight()).toBeTruthy();
+  });
 
   // it('should be not able to update with invalid user', async () => {
   //   const update = await updateProfile.execute({
@@ -82,4 +82,4 @@ describe('UpdateProfile', () => {
 
   //   expect(update.isLeft()).toBeTruthy()
   // })
-})
+});

@@ -1,16 +1,16 @@
-import { WatchedList } from '@core/domain/WatchedList'
-import { Token } from './Token'
+import { WatchedList } from '@core/domain/WatchedList';
+import { Token } from './Token';
 
 export class Tokens extends WatchedList<Token> {
   private constructor(token: Token[]) {
-    super(token)
+    super(token);
   }
 
   public compareItems(a: Token, b: Token): boolean {
-    return a.equals(b)
+    return a.equals(b);
   }
 
   public static create(tokens?: Token[]): Tokens {
-    return new Tokens(tokens || [])
+    return new Tokens(tokens || []);
   }
 }

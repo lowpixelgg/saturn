@@ -1,29 +1,29 @@
-import { Either, left, right } from '@core/logic/Either'
-import { ProfileDoesNotExist } from './errors/ProfileDoesNotExist'
-import { IProfilesRepository } from '@modules/http/social/repositories/IProfilesRepository'
+import { Either, left, right } from '@core/logic/Either';
+import { ProfileDoesNotExist } from './errors/ProfileDoesNotExist';
+import { IProfilesRepository } from '@modules/http/social/repositories/IProfilesRepository';
 
-type GetProfileResponse = object
-type GetProfileDetails = Either<ProfileDoesNotExist, GetProfileResponse>
+type GetProfileResponse = object;
+type GetProfileDetails = Either<ProfileDoesNotExist, GetProfileResponse>;
 
 export class GetProfile {
   constructor(private profilesRepository: IProfilesRepository) {}
 
   async execute({ ident, user }): Promise<GetProfileDetails> {
-    const exists = await this.profilesRepository.exists(ident)
+    const exists = await this.profilesRepository.exists(ident);
 
     if (!exists) {
-      return left(new ProfileDoesNotExist())
+      return left(new ProfileDoesNotExist());
     }
 
-    const profile = await this.profilesRepository.findOne(ident)
+    const profile = await this.profilesRepository.findOne(ident);
 
-    const requestUser = await this.profilesRepository.findOne(user.id)
+    const requestUser = await this.profilesRepository.findOne(user.id);
 
-    const userfollows = requestUser.following as object[]
+    const userfollows = requestUser.following as object[];
 
     const isFollowing = userfollows.find(
       (follow: any) => follow.followers_id === profile.User.id
-    )
+    );
 
     const {
       avatar,
@@ -44,10 +44,10 @@ export class GetProfile {
       twitch,
       whitelist,
       instagram,
-    } = profile
+    } = profile;
 
-    delete User.password
-    delete User.email
+    delete User.password;
+    delete User.email;
 
     return right({
       ...User,
@@ -69,6 +69,6 @@ export class GetProfile {
       instagram,
       isFollowing: Boolean(isFollowing) ? Boolean(isFollowing) : false,
       slug,
-    })
+    });
   }
 }

@@ -3,6 +3,6 @@ export class RequisitedFlagNotExists extends Error {
     super(
       `Rejected REQUEST, The Authorization requested is invalid or not found. ${action}`
     );
-    this.name = "RequisitedFlagNotExists";
+    this.name = 'RequisitedFlagNotExists';
   }
 }

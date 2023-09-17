@@ -1,10 +1,10 @@
-import PrismaGetRootUsers from '@infra/analytics/providers/prisma-getRootUsersCreated'
-import PrismaGetRootPosts from '@infra/analytics/providers/prisma-getRootPostsCreated'
-import PrismaNonChartInfos from '@infra/analytics/providers/prisma-getNonChartInfos'
+import PrismaGetRootUsers from '@infra/analytics/providers/prisma-getRootUsersCreated';
+import PrismaGetRootPosts from '@infra/analytics/providers/prisma-getRootPostsCreated';
+import PrismaNonChartInfos from '@infra/analytics/providers/prisma-getNonChartInfos';
 
-import express from 'express'
+import express from 'express';
 
-const Analytics = express.Router()
+const Analytics = express.Router();
 
 Analytics.get('/analytics/root', async (req, res) =>
   res.json({
@@ -12,6 +12,6 @@ Analytics.get('/analytics/root', async (req, res) =>
     users: await PrismaGetRootUsers(),
     posts: await PrismaGetRootPosts(),
   })
-)
+);
 
-export { Analytics }
+export { Analytics };

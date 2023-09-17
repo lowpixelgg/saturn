@@ -1,7 +1,7 @@
-import { GetTokenByCodeType } from '../@types/OAuth2Types'
-import constants from '@configs/constants/discord'
-import axios from 'axios'
-import { oauth2 } from '@infra/libs/discord-oauth2'
+import { GetTokenByCodeType } from '../@types/OAuth2Types';
+import constants from '@configs/constants/discord';
+import axios from 'axios';
+import { oauth2 } from '@infra/libs/discord-oauth2';
 
 export default class OAUTH2 {
   static async getTokenByCode(code: string): Promise<GetTokenByCodeType> {
@@ -10,13 +10,13 @@ export default class OAUTH2 {
       scope: ['identify', 'guilds.join'],
 
       code: code,
-    })
+    });
 
     if (!oauth.access_token) {
-      return null
+      return null;
     }
 
-    return oauth
+    return oauth;
   }
 
   static async getTokenByRefresh(
@@ -27,24 +27,24 @@ export default class OAUTH2 {
       client_secret: process.env.OAUTH2_DISCORD_CLIENT_SECRET,
       grant_type: 'refresh_token',
       refresh_token: refresh_token,
-    })
+    });
 
-    const { data } = await axios.post(constants.entry_point_token, collection)
+    const { data } = await axios.post(constants.entry_point_token, collection);
 
     if (!data) {
-      return null
+      return null;
     }
 
-    return data
+    return data;
   }
 
   static async me(access_token: string) {
-    const user = await oauth2.getUser(access_token)
+    const user = await oauth2.getUser(access_token);
 
     if (!user.id) {
-      return null
+      return null;
     }
 
-    return user
+    return user;
   }
 }

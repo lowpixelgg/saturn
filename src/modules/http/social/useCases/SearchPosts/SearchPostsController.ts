@@ -1,20 +1,20 @@
-import { Controller } from '@core/infra/Controller'
+import { Controller } from '@core/infra/Controller';
 import {
   clientError,
   fail,
   HttpResponse,
   notFound,
   ok,
-} from '@core/infra/HttpResponse'
-import { SearchPostUserNotFound } from './errors/SearchPostUserNotFound'
-import { SearchPosts } from './SearchPosts'
+} from '@core/infra/HttpResponse';
+import { SearchPostUserNotFound } from './errors/SearchPostUserNotFound';
+import { SearchPosts } from './SearchPosts';
 
 type SearchPostsControllerRequest = {
-  user: { id: string }
-  query?: string
-  page?: string
-  per_page?: string
-}
+  user: { id: string };
+  query?: string;
+  page?: string;
+  per_page?: string;
+};
 
 export class SearchPostsController implements Controller {
   constructor(private searchPosts: SearchPosts) {}
@@ -30,19 +30,19 @@ export class SearchPostsController implements Controller {
       query,
       page: page ? Number(page) : undefined,
       perPage: page ? Number(per_page) : undefined,
-    })
+    });
 
     if (result.isLeft()) {
-      const error = result.value
+      const error = result.value;
 
       switch (error.constructor) {
         case SearchPostUserNotFound:
-          return notFound(error)
+          return notFound(error);
         default:
-          return clientError(error)
+          return clientError(error);
       }
     } else {
-      return ok(result.value)
+      return ok(result.value);
     }
   }
 }

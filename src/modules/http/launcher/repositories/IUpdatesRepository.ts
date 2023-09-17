@@ -1,4 +1,4 @@
-import { Update } from "../domain/Update";
+import { Update } from '../domain/Update';
 
 export interface IUpdatesRepository {
   create(update: Update): Promise<void>;

@@ -1,18 +1,18 @@
-import { describe, beforeEach, it, expect } from 'vitest'
-import { RegisterUser } from './RegisterUser'
-import { AccountAleardyExists } from './errors/AccountAleardyExists'
-import { IUserRepository } from '@modules/http/accounts/repositories/IUserRepository'
-import { InMemoryUserRepository } from '@modules/http/accounts/repositories/in-memory/inMemoryUserRepository'
-import { createUser } from '@utils/tests/UserFactory'
+import { describe, beforeEach, it, expect } from 'vitest';
+import { RegisterUser } from './RegisterUser';
+import { AccountAleardyExists } from './errors/AccountAleardyExists';
+import { IUserRepository } from '@modules/http/accounts/repositories/IUserRepository';
+import { InMemoryUserRepository } from '@modules/http/accounts/repositories/in-memory/inMemoryUserRepository';
+import { createUser } from '@utils/tests/UserFactory';
 
-let usersRepository: IUserRepository
-let registerUser: RegisterUser
+let usersRepository: IUserRepository;
+let registerUser: RegisterUser;
 
 describe('Register user Account', () => {
   beforeEach(() => {
-    usersRepository = new InMemoryUserRepository()
-    registerUser = new RegisterUser(usersRepository)
-  })
+    usersRepository = new InMemoryUserRepository();
+    registerUser = new RegisterUser(usersRepository);
+  });
 
   /* Testing the registerUser.execute function. */
   /* Testing the registerUser.execute function. */
@@ -32,25 +32,25 @@ describe('Register user Account', () => {
       name: 'JhonDoe',
       email: 'jhon',
       password: '123',
-    })
+    });
 
-    expect(response.isLeft()).toBeTruthy()
-  })
+    expect(response.isLeft()).toBeTruthy();
+  });
 
   it('should not be able to register a new user with existing email', async () => {
     const user = createUser({
       email: 'jhon@doe.com',
-    })
+    });
 
-    usersRepository.create(user)
+    usersRepository.create(user);
 
     const response = await registerUser.execute({
       name: 'JhonDoe',
       email: 'jhon@doe.com',
       password: '1234561',
-    })
+    });
 
-    expect(response.isLeft()).toBeTruthy()
-    expect(response.value).toEqual(new AccountAleardyExists())
-  })
-})
+    expect(response.isLeft()).toBeTruthy();
+    expect(response.value).toEqual(new AccountAleardyExists());
+  });
+});

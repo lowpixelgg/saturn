@@ -441,4 +441,4 @@ export const WhitelistChangeStatus = (username: string) => `
     </table>
   </body>
 </html>
-`
+`;

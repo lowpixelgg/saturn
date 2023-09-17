@@ -1,33 +1,33 @@
-import { Controller } from '@core/infra/Controller'
-import { GetAccountData } from './GetAccountData'
+import { Controller } from '@core/infra/Controller';
+import { GetAccountData } from './GetAccountData';
 import {
   clientError,
   fail,
   HttpResponse,
   notFound,
   ok,
-} from '@core/infra/HttpResponse'
+} from '@core/infra/HttpResponse';
 
-import { GetAccountDataUserNotExists } from './errors/GetAccountDataUserNotExists'
-import { NotificationMapper } from '@modules/http/accounts/mappers/NotificationMappert'
-import { AppointmentMapper } from '@modules/http/player/mappers/AppointmentMapper'
+import { GetAccountDataUserNotExists } from './errors/GetAccountDataUserNotExists';
+import { NotificationMapper } from '@modules/http/accounts/mappers/NotificationMappert';
+import { AppointmentMapper } from '@modules/http/player/mappers/AppointmentMapper';
 
 export class GetAccountDataController implements Controller {
   constructor(private getAccountData: GetAccountData) {}
 
   async handle({ user }): Promise<HttpResponse> {
-    const result = await this.getAccountData.execute({ user })
+    const result = await this.getAccountData.execute({ user });
 
     if (result.isLeft()) {
-      const error = result.value
+      const error = result.value;
       switch (error.constructor) {
         case GetAccountDataUserNotExists:
-          return notFound(error)
+          return notFound(error);
         default:
-          return fail(error)
+          return fail(error);
       }
     } else {
-      const Parse = result.value
+      const Parse = result.value;
 
       return ok({
         _id: Parse.id,
@@ -45,7 +45,7 @@ export class GetAccountDataController implements Controller {
         whitelist: Parse.status,
         timeout: Parse.timeout,
         ...Parse.Profile,
-      })
+      });
     }
   }
 }

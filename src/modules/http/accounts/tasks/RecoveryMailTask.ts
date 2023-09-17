@@ -1,5 +1,5 @@
-import Mail from '@infra/libs/nodemailer/nodemailer'
-import { RecoveryEmailTemplate } from '@templates/EmailTemplates/RecoveryEmailTemplate'
+import Mail from '@infra/libs/nodemailer/nodemailer';
+import { RecoveryEmailTemplate } from '@templates/EmailTemplates/RecoveryEmailTemplate';
 
 export default {
   key: 'RecoveryMail',
@@ -13,6 +13,6 @@ export default {
       to: `${data.name} <${data.email}>`,
       subject: 'Recuperação de conta',
       html: RecoveryEmailTemplate(data.name, data.recovery_token),
-    })
+    });
   },
-}
+};

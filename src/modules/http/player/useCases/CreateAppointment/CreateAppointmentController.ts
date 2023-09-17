@@ -1,4 +1,4 @@
-import { Controller } from '@core/infra/Controller'
+import { Controller } from '@core/infra/Controller';
 import {
   clientError,
   conflict,
@@ -6,17 +6,17 @@ import {
   HttpResponse,
   notFound,
   ok,
-} from '@core/infra/HttpResponse'
-import { CreateAppointment } from './CreateAppointment'
-import { CreateAppointmentTimeAlreadyInUse } from './errors/CreateAppointmentTimeAlreadyInUse'
-import { CreateAppointmentUserNotFound } from './errors/CreateAppointmentUserNotFound'
+} from '@core/infra/HttpResponse';
+import { CreateAppointment } from './CreateAppointment';
+import { CreateAppointmentTimeAlreadyInUse } from './errors/CreateAppointmentTimeAlreadyInUse';
+import { CreateAppointmentUserNotFound } from './errors/CreateAppointmentUserNotFound';
 
 type CreateAppointmentConnErrorRequest = {
-  user: { id: string }
-  timeId: string
-  name: string
-  observation: string
-}
+  user: { id: string };
+  timeId: string;
+  name: string;
+  observation: string;
+};
 
 export class CreateAppointmentConnError implements Controller {
   constructor(private createAppointment: CreateAppointment) {}
@@ -32,23 +32,23 @@ export class CreateAppointmentConnError implements Controller {
       timeId,
       name,
       observation,
-    })
+    });
 
     if (result.isLeft()) {
-      const error = result.value
+      const error = result.value;
 
       switch (error.constructor) {
         case CreateAppointmentUserNotFound:
-          return notFound(error)
+          return notFound(error);
         case CreateAppointmentConnError:
-          return clientError(error)
+          return clientError(error);
         case CreateAppointmentTimeAlreadyInUse:
-          return conflict(error)
+          return conflict(error);
         default:
-          return fail(error)
+          return fail(error);
       }
     } else {
-      return ok()
+      return ok();
     }
   }
 }

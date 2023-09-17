@@ -5,40 +5,40 @@ import {
   Staff,
   User,
   Whitelist as PersistenceWhitelist,
-} from '@prisma/client'
-import { Answer } from '../domain/Answer'
-import { Answers } from '../domain/Answers'
-import { Whitelist } from '../domain/Whitelist'
-import { UserMapper } from '@modules/http/accounts/mappers/UserMapper'
+} from '@prisma/client';
+import { Answer } from '../domain/Answer';
+import { Answers } from '../domain/Answers';
+import { Whitelist } from '../domain/Whitelist';
+import { UserMapper } from '@modules/http/accounts/mappers/UserMapper';
 
 type PersistenceWhitelistRaw = PersistenceWhitelist & {
   user?: User & {
-    Profile: Profile
-    Staff: Staff
-  }
-  exam: Exam[]
-}
+    Profile: Profile;
+    Staff: Staff;
+  };
+  exam: Exam[];
+};
 
 export class WhitelistMapper {
   static toDomain(raw: PersistenceWhitelistRaw): Whitelist {
-    let exam: Answers
+    let exam: Answers;
 
     if (raw.exam) {
-      let uptoAnswers: Answer[] = []
+      let uptoAnswers: Answer[] = [];
 
       raw.exam.map((answer: Exam) => {
         let ans = Answer.create({
           answer: answer.answer,
           question: answer.question,
-        })
+        });
 
-        uptoAnswers = [...uptoAnswers, ans]
-      })
+        uptoAnswers = [...uptoAnswers, ans];
+      });
 
-      exam = Answers.create(uptoAnswers)
+      exam = Answers.create(uptoAnswers);
     }
 
-    const user = UserMapper.toDomain(raw.user)
+    const user = UserMapper.toDomain(raw.user);
 
     const whitelist = Whitelist.create(
       {
@@ -51,9 +51,9 @@ export class WhitelistMapper {
         exam: exam,
       },
       raw.id
-    )
+    );
 
-    return whitelist
+    return whitelist;
   }
 
   static toPersistence(whitelist: Whitelist) {
@@ -64,6 +64,6 @@ export class WhitelistMapper {
       staff_id: whitelist.staff_id,
       createdAt: whitelist.createdAt,
       updateAt: whitelist.updateAt,
-    }
+    };
   }
 }

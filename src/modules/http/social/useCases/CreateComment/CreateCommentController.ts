@@ -1,18 +1,18 @@
-import { Controller } from '@core/infra/Controller'
+import { Controller } from '@core/infra/Controller';
 import {
   clientError,
   HttpResponse,
   notFound,
   ok,
-} from '@core/infra/HttpResponse'
-import { CreateComment } from './CreateComment'
-import { CommentCommentPostNotExist } from './errors/CreateCommentPostNotExist'
+} from '@core/infra/HttpResponse';
+import { CreateComment } from './CreateComment';
+import { CommentCommentPostNotExist } from './errors/CreateCommentPostNotExist';
 
 type CreateCommentRequest = {
-  postId: string
-  content: string
-  user: { id: string }
-}
+  postId: string;
+  content: string;
+  user: { id: string };
+};
 
 export class CreateCommentController implements Controller {
   constructor(private createComment: CreateComment) {}
@@ -26,19 +26,19 @@ export class CreateCommentController implements Controller {
       postId,
       content,
       user,
-    })
+    });
 
     if (result.isLeft()) {
-      const error = result.value
+      const error = result.value;
 
       switch (error.constructor) {
         case CommentCommentPostNotExist:
-          return notFound(error)
+          return notFound(error);
         default:
-          return clientError(error)
+          return clientError(error);
       }
     } else {
-      return ok(result.value)
+      return ok(result.value);
     }
   }
 }

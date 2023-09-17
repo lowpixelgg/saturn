@@ -1,35 +1,35 @@
-import { prisma } from '@infra/prisma/prisma-client'
+import { prisma } from '@infra/prisma/prisma-client';
 
 export default async function getNonChartInfos() {
-  const users = await prisma.user.findMany()
-  const whitelists = await prisma.whitelist.findMany()
-  const posts = await prisma.post.findMany()
-  const comments = await prisma.comment.findMany()
-  const likes = await prisma.likes.findMany()
+  const users = await prisma.user.findMany();
+  const whitelists = await prisma.whitelist.findMany();
+  const posts = await prisma.post.findMany();
+  const comments = await prisma.comment.findMany();
+  const likes = await prisma.likes.findMany();
 
   const approvedWhitelists = await prisma.whitelist.findMany({
     where: {
       status: 'APROVADO',
     },
-  })
+  });
 
   const reprovedWhitelists = await prisma.whitelist.findMany({
     where: {
       status: 'REPROVADO',
     },
-  })
+  });
 
   const premiumUsers = await prisma.user.findMany({
     where: {
       isPremium: true,
     },
-  })
+  });
 
   const verifiedUsers = await prisma.user.findMany({
     where: {
       isVerified: true,
     },
-  })
+  });
 
   return {
     users: users.length,
@@ -41,5 +41,5 @@ export default async function getNonChartInfos() {
     posts: posts.length,
     comments: comments.length,
     likes: likes.length,
-  }
+  };
 }

@@ -1,20 +1,20 @@
-import { Controller } from '@core/infra/Controller'
+import { Controller } from '@core/infra/Controller';
 import {
   clientError,
   fail,
   HttpResponse,
   notFound,
   ok,
-} from '@core/infra/HttpResponse'
-import { CreateWeekTimes } from './CreateWeekTimes'
-import { CreateWeekTimeInvalidRequest } from './errors/CreateWeekTimeInvalidRequest'
-import { CreateWeekTimesInvalidTimesLength } from './errors/CreateWeekTimesInvalidTimesLength'
-import { CreateWeekTimeStaffNotFound } from './errors/CreateWeekTimeStaffNotFound'
+} from '@core/infra/HttpResponse';
+import { CreateWeekTimes } from './CreateWeekTimes';
+import { CreateWeekTimeInvalidRequest } from './errors/CreateWeekTimeInvalidRequest';
+import { CreateWeekTimesInvalidTimesLength } from './errors/CreateWeekTimesInvalidTimesLength';
+import { CreateWeekTimeStaffNotFound } from './errors/CreateWeekTimeStaffNotFound';
 
 type CreateWeekTimesControllerRequest = {
-  id: string
-  times: any[]
-}
+  id: string;
+  times: any[];
+};
 
 export class CreateWeekTimesController implements Controller {
   constructor(private createWeekTimes: CreateWeekTimes) {}
@@ -23,23 +23,23 @@ export class CreateWeekTimesController implements Controller {
     id,
     times,
   }: CreateWeekTimesControllerRequest): Promise<HttpResponse> {
-    const result = await this.createWeekTimes.execute({ id, times })
+    const result = await this.createWeekTimes.execute({ id, times });
 
     if (result.isLeft()) {
-      const error = result.value
+      const error = result.value;
 
       switch (error.constructor) {
         case CreateWeekTimeInvalidRequest:
-          return clientError(error)
+          return clientError(error);
         case CreateWeekTimeStaffNotFound:
-          return notFound(error)
+          return notFound(error);
         case CreateWeekTimesInvalidTimesLength:
-          return clientError(error)
+          return clientError(error);
         default:
-          return fail(error)
+          return fail(error);
       }
     } else {
-      return ok()
+      return ok();
     }
   }
 }

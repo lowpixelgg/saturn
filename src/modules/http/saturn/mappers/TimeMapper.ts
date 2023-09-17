@@ -1,5 +1,5 @@
-import { Time as PersistenceStaff } from '@prisma/client'
-import { Time } from '@modules/http/saturn/domain/Time'
+import { Time as PersistenceStaff } from '@prisma/client';
+import { Time } from '@modules/http/saturn/domain/Time';
 
 export class TimeMapper {
   static toDomain(raw: PersistenceStaff) {
@@ -10,9 +10,9 @@ export class TimeMapper {
         staff_id: raw.staff_id,
       },
       raw.id
-    )
+    );
 
-    return time
+    return time;
   }
 
   static toPersistence(time: Time) {
@@ -21,6 +21,6 @@ export class TimeMapper {
       scheduled: time.scheduled,
       Date: time.date,
       staff_id: time.staff_id,
-    }
+    };
   }
 }

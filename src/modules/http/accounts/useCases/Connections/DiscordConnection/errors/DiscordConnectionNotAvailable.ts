@@ -1,4 +1,4 @@
-import { DomainError } from '@core/domain/errors/DomainError'
+import { DomainError } from '@core/domain/errors/DomainError';
 
 export class DiscordConnectionNotAvailable
   extends Error
@@ -7,7 +7,7 @@ export class DiscordConnectionNotAvailable
   constructor() {
     super(
       `CORE:ACCOUNTS:USECASES:CONNECTIONS:DISCORD_CONNECTION:DISCORD_CONNECTION_NOT_AVAILABLE`
-    )
-    this.name = 'DiscordConnectionNotAvailable'
+    );
+    this.name = 'DiscordConnectionNotAvailable';
   }
 }
