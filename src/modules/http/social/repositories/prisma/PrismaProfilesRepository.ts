@@ -81,11 +81,10 @@ export class PrismaProfilesRepository implements IProfilesRepository {
     perPage: number,
     randomize: boolean
   ): Promise<SearchResponse> {
-    const queryPayload = {
+    let queryPayload: any = {
       take: perPage,
       skip: (page - 1) * perPage || 0,
       where: {},
-      orderBy: {},
     };
 
     if (query) {
@@ -97,34 +96,46 @@ export class PrismaProfilesRepository implements IProfilesRepository {
     }
 
     if (randomize) {
-      const profilesCount = await prisma.profile.count();
-      const skip = Math.floor(Math.random() * profilesCount);
+      // Use prisma.$queryRaw apenas quando randomize for verdadeiro
+      const randomProfiles = await prisma.$queryRaw`
+        SELECT * FROM Profile 
+        WHERE 1=1 
+        ${query ? `AND user_username LIKE '%${query}%'` : ''}
+        ORDER BY RAND()
+        LIMIT ${perPage} OFFSET ${(page - 1) * perPage}
+      `;
 
-      queryPayload.skip = skip;
-      queryPayload.orderBy = {
-        user: { createdAt: 'desc' },
+      const totalProfiles = await prisma.profile.count({
+        where: queryPayload.where,
+      });
+
+      return {
+        // @ts-ignore
+        data: randomProfiles.map(profile => ProfileMapper.toDomain(profile)),
+        totalCount: totalProfiles,
+      };
+    } else {
+      // Se não randomizar, use o método padrão do Prisma para buscar os perfis
+      const profiles = await prisma.profile.findMany({
+        ...queryPayload,
+        include: {
+          badges: true,
+          medals: true,
+          user: true,
+          following: true,
+          followers: true,
+        },
+      });
+
+      const totalProfiles = await prisma.profile.aggregate({
+        _count: true,
+        where: queryPayload.where,
+      });
+
+      return {
+        data: profiles.map(profile => ProfileMapper.toDomain(profile)),
+        totalCount: totalProfiles._count,
       };
     }
-
-    const profiles = await prisma.profile.findMany({
-      ...queryPayload,
-      include: {
-        badges: true,
-        medals: true,
-        user: true,
-        following: true,
-        followers: true,
-      },
-    });
-
-    const profileCount = await prisma.profile.aggregate({
-      _count: true,
-      where: queryPayload.where,
-    });
-
-    return {
-      data: profiles.map(profile => ProfileMapper.toDomain(profile)),
-      totalCount: profileCount._count,
-    };
   }
 }
