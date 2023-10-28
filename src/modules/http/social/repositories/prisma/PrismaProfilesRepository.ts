@@ -81,13 +81,9 @@ export class PrismaProfilesRepository implements IProfilesRepository {
     perPage: number,
     randomize: boolean
   ): Promise<SearchResponse> {
-    const totalProfiles = await prisma.profile.count();
-
     let queryPayload: any = {
       take: perPage,
-      skip: randomize
-        ? Math.floor(Math.random() * totalProfiles)
-        : (page - 1) * perPage || 0,
+      skip: (page - 1) * perPage || 0,
       where: {},
     };
 
