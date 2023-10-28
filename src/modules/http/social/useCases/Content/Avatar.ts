@@ -59,13 +59,13 @@ export class ContentAvatar {
     }
 
     try {
-      const upload = await GoogleStorage.uploadImage(file, 'avatars');
+      const upload = await GoogleStorage.upload(file, 'avatars');
 
-      profile.setAvatarURL = upload;
+      profile.setAvatarURL = upload.url;
       await this.profilesRepository.save(profile);
 
       return right({
-        file: upload,
+        file: upload.url,
       });
     } catch (error) {
       return left(error);

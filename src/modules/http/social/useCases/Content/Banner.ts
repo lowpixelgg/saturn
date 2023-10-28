@@ -58,13 +58,13 @@ export class ContentBanner {
     }
 
     try {
-      const upload = await GoogleStorage.uploadImage(file, 'banners');
+      const upload = await GoogleStorage.upload(file, 'banners');
 
-      profile.setBannerURL = upload;
+      profile.setBannerURL = upload.url;
       await this.profilesRepository.save(profile);
 
       return right({
-        file: upload,
+        file: upload.url,
       });
     } catch (error) {
       return left(error);

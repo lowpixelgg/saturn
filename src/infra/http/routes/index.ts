@@ -5,7 +5,7 @@ import { Player } from './PlayerRoutes';
 import { notFound } from '@core/infra/HttpResponse';
 import { Saturn } from './SaturnRoutes';
 import { Analytics } from './Analytics';
-import { Launcher } from './LauncherRoutes';
+import { Game } from './GameRoutes';
 import multer from 'multer';
 import { update } from 'lodash';
 import { adaptRoute } from '@core/infra/adapters/ExpressRouteAdapter';
@@ -17,7 +17,7 @@ Router.use('/v1/social', Social);
 Router.use('/v1/player', Player);
 Router.use('/v1/saturn', Saturn);
 Router.use('/v1/', Analytics);
-Router.use('/v1/launcher', Launcher);
+Router.use('/v1/game', Game);
 
 Router.get('*', (_, res) =>
   res
