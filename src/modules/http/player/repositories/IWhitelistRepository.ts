@@ -12,5 +12,10 @@ export interface IWhitelistRepository {
   findOneByUserID(id: string): Promise<Whitelist>;
   save(whitelist: Whitelist): Promise<void>;
   deleteByID(id: string): Promise<void>;
-  search(query: string, page: number, perPage: number): Promise<SearchResponse>;
+  search(
+    query: string,
+    page: number,
+    perPage: number,
+    randomize: boolean
+  ): Promise<SearchResponse>;
 }

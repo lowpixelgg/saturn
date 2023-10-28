@@ -78,9 +78,10 @@ export class PrismaProfilesRepository implements IProfilesRepository {
   async search(
     query: string,
     page: number,
-    perPage: number
+    perPage: number,
+    randomize: boolean
   ): Promise<SearchResponse> {
-    const queryPayload = {
+    let queryPayload: any = {
       take: perPage,
       skip: (page - 1) * perPage || 0,
       where: {},
@@ -88,19 +89,29 @@ export class PrismaProfilesRepository implements IProfilesRepository {
 
     if (query) {
       queryPayload.where = {
-        OR: {
-          user: { username: { contains: query, mode: 'insensitive' } },
+        AND: [
+          {
+            OR: {
+              user: { username: { contains: query, mode: 'insensitive' } },
+            },
+          },
+          queryPayload.where,
+        ],
+      };
+    }
+
+    if (randomize) {
+      queryPayload.orderBy = { id: 'asc' };
+    } else {
+      queryPayload.orderBy = {
+        user: {
+          username: 'asc',
         },
       };
     }
 
     const profiles = await prisma.profile.findMany({
       ...queryPayload,
-      orderBy: {
-        user: {
-          username: 'asc',
-        },
-      },
       include: {
         badges: true,
         medals: true,

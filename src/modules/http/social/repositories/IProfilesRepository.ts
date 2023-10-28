@@ -10,5 +10,10 @@ export interface IProfilesRepository {
   findOne(slug: string): Promise<Profile>;
   findAll(): Promise<Profile[]>;
   save(slug: Profile): Promise<void>;
-  search(query: string, page: number, perPage: number): Promise<SearchResponse>;
+  search(
+    query: string,
+    page: number,
+    perPage: number,
+    randomize: boolean
+  ): Promise<SearchResponse>;
 }

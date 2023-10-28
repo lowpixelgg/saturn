@@ -6,6 +6,7 @@ type SearchProfilesControllerRequest = {
   query?: string;
   page?: string;
   per_page?: string;
+  randomize?: string;
 };
 
 export class SearchProfilesController implements Controller {
@@ -15,11 +16,13 @@ export class SearchProfilesController implements Controller {
     query,
     page,
     per_page,
+    randomize,
   }: SearchProfilesControllerRequest): Promise<HttpResponse> {
     try {
       const { data, totalCount } = await this.searchProfiles.execute({
         query,
         page: page ? Number(page) : undefined,
+        randomize: randomize ? Boolean(randomize) : undefined,
         perPage: per_page ? Number(per_page) : undefined,
       });
 
