@@ -81,33 +81,29 @@ export class PrismaProfilesRepository implements IProfilesRepository {
     perPage: number,
     randomize: boolean
   ): Promise<SearchResponse> {
-    let queryPayload: any = {
+    const queryPayload = {
       take: perPage,
       skip: (page - 1) * perPage || 0,
       where: {},
+      orderBy: {},
     };
 
     if (query) {
       queryPayload.where = {
-        AND: [
-          {
-            OR: {
-              user: { username: { contains: query, mode: 'insensitive' } },
-            },
-          },
-          queryPayload.where,
-        ],
+        OR: {
+          user: { username: { contains: query, mode: 'insensitive' } },
+        },
       };
     }
 
     if (randomize) {
-      // Adicione a lógica de randomização
-      queryPayload.orderBy = { id: 'asc' }; // Isso é apenas um exemplo, você pode ajustar a ordenação conforme necessário.
-    } else {
+      const profilesCount = await prisma.profile.count();
+      const skip = Math.floor(Math.random() * profilesCount);
+
+      queryPayload.skip = skip;
+      queryPayload.take = 5;
       queryPayload.orderBy = {
-        user: {
-          username: 'asc',
-        },
+        user: { createdAt: 'desc' },
       };
     }
 
