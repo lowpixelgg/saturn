@@ -81,7 +81,7 @@ export class PrismaProfilesRepository implements IProfilesRepository {
     perPage: number,
     randomize: boolean
   ): Promise<SearchResponse> {
-    const queryPayload = {
+    let queryPayload: any = {
       take: perPage,
       skip: (page - 1) * perPage || 0,
       where: {},
@@ -89,8 +89,24 @@ export class PrismaProfilesRepository implements IProfilesRepository {
 
     if (query) {
       queryPayload.where = {
-        OR: {
-          user: { username: { contains: query, mode: 'insensitive' } },
+        AND: [
+          {
+            OR: {
+              user: { username: { contains: query, mode: 'insensitive' } },
+            },
+          },
+          queryPayload.where,
+        ],
+      };
+    }
+
+    if (randomize) {
+      // Adicione a lógica de randomização
+      queryPayload.orderBy = { id: 'asc' }; // Isso é apenas um exemplo, você pode ajustar a ordenação conforme necessário.
+    } else {
+      queryPayload.orderBy = {
+        user: {
+          username: 'asc',
         },
       };
     }
@@ -105,11 +121,6 @@ export class PrismaProfilesRepository implements IProfilesRepository {
         followers: true,
       },
     });
-
-    if (randomize) {
-      // Embaralhar aleatoriamente os perfis antes de retornar
-      profiles.sort(() => Math.random() - 0.5);
-    }
 
     const profileCount = await prisma.profile.aggregate({
       _count: true,
