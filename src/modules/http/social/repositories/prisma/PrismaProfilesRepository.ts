@@ -93,13 +93,15 @@ export class PrismaProfilesRepository implements IProfilesRepository {
 
     if (query) {
       queryPayload.where = {
-        AND: [
+        OR: [
           {
-            OR: {
-              user: { username: { contains: query, mode: 'insensitive' } },
+            user: {
+              username: {
+                contains: query,
+                mode: 'insensitive',
+              },
             },
           },
-          queryPayload.where,
         ],
       };
     }

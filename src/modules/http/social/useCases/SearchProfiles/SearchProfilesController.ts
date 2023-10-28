@@ -22,7 +22,7 @@ export class SearchProfilesController implements Controller {
       const { data, totalCount } = await this.searchProfiles.execute({
         query,
         page: page ? Number(page) : undefined,
-        randomize: randomize === 'true' ? Boolean(randomize) : undefined,
+        randomize: randomize === 'true' ? true : false,
         perPage: per_page ? Number(per_page) : undefined,
       });
 
