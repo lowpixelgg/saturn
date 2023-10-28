@@ -16,8 +16,6 @@ export class GetUpdatesPerDate {
   async execute({
     date,
   }: GetUpdatesPerDateRequest): Promise<GetUpdatesPerDateResponse> {
-    console.log();
-
     if (isISODate(date)) {
       const parsedDate = new Date(date);
       const updates = await this.updatesRepository.getUpdatesByDate(parsedDate);

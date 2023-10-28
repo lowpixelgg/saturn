@@ -48,7 +48,6 @@ export class ChangeStaffInterview {
     }
 
     if (token.type !== 'appointments') {
-      console.log(token);
       return left(new ServiceTokenNotValid());
     }
 

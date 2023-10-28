@@ -12,8 +12,6 @@ import { Middleware } from '@core/infra/Middleware';
 
 import { AccessDenied } from '@infra/http/errors/AccessDenied';
 import { User } from '@modules/http/accounts/domain/user/user';
-import { createAnonymous } from '@utils/tests/UserFactory';
-import { UserMapper } from '@modules/http/accounts/mappers/UserMapper';
 
 type EnsureAuthenticatedMiddlewareRequest = {
   accessToken: string;

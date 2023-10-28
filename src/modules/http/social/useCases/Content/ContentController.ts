@@ -1,4 +1,3 @@
-import { User } from '@modules/http/accounts/domain/user/user';
 import { Controller } from '@core/infra/Controller';
 import {
   clientError,
@@ -6,18 +5,18 @@ import {
   HttpResponse,
   notFound,
   ok,
+  tooLarge,
 } from '@core/infra/HttpResponse';
-import { request } from 'express';
 import { ContentAvatar } from './Avatar';
 import { ContentBanner } from './Banner';
 import { ContentAvatarError } from './errors/ContentAvatarError';
 import { ContentUserNotExist } from './errors/ContentUserNotExist';
+import { ContentFileIsTooLarge } from './errors/ContentFileIsTooLarge';
 
 type ContentAvatarRequest = {
-  image: string;
-  extension: string;
-  avatar: boolean;
-  banner: boolean;
+  file: Express.Multer.File;
+  avatar?: boolean;
+  banner?: boolean;
   user: { id: string };
 };
 
@@ -28,13 +27,11 @@ export class ContentController implements Controller {
   ) {}
 
   private async handleUpdateAvatar(
-    image: string,
-    extension: string,
+    file: Express.Multer.File,
     id: string
   ): Promise<HttpResponse> {
     const result = await this.avatarContent.execute({
-      image,
-      extension,
+      file,
       id,
     });
 
@@ -45,6 +42,8 @@ export class ContentController implements Controller {
           return clientError(error);
         case ContentUserNotExist:
           return notFound(error);
+        case ContentFileIsTooLarge:
+          return tooLarge(error);
         default:
           return fail(error);
       }
@@ -54,13 +53,11 @@ export class ContentController implements Controller {
   }
 
   private async handleUpdateBanner(
-    image: string,
-    extension: string,
+    file: Express.Multer.File,
     id: string
   ): Promise<HttpResponse> {
     const result = await this.bannerContent.execute({
-      image,
-      extension,
+      file,
       id,
     });
 
@@ -71,6 +68,8 @@ export class ContentController implements Controller {
           return clientError(error);
         case ContentUserNotExist:
           return notFound(error);
+        case ContentFileIsTooLarge:
+          return tooLarge(error);
         default:
           return fail(error);
       }
@@ -80,16 +79,15 @@ export class ContentController implements Controller {
   }
 
   async handle({
-    image,
-    extension,
+    file,
     avatar,
     banner,
     user,
   }: ContentAvatarRequest): Promise<HttpResponse> {
     if (Boolean(avatar)) {
-      return this.handleUpdateAvatar(image, extension, user.id);
+      return this.handleUpdateAvatar(file, user.id);
     } else if (Boolean(banner)) {
-      return this.handleUpdateBanner(image, extension, user.id);
+      return this.handleUpdateBanner(file, user.id);
     } else {
       return ok({});
     }

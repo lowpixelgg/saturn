@@ -63,10 +63,7 @@ class Saturn {
     );
 
     this.app.use(express.urlencoded({ extended: false }));
-
-    this.app.use(
-      express.json({ type: ['application/json', 'text/plain'], limit: '50mb' })
-    );
+    this.app.use(express.json({ type: ['application/json', 'text/plain'] }));
     this.app.use(Router);
   }
 

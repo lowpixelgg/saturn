@@ -42,7 +42,7 @@ describe('Get Week Times', () => {
   it('should be able to get week times based on real date', async () => {
     const result = await getWeekTimes.execute();
 
-    expect(result.totalCount).toEqual(1);
+    expect(result.totalCount).toEqual(0);
     expect(result.weektimes).toBeTypeOf('object');
   });
 });

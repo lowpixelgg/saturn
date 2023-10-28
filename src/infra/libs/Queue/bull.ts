@@ -24,7 +24,7 @@ export default {
       log.debug(`Bull: ${queue.name} has been processed`);
 
       queue.bull.on('failed', (job: string, err: Error) => {
-        console.log(log.error(`Bull: ${queue.key}, ${err}`));
+        log.error(`Bull: ${queue.key}, ${err}`);
       });
     });
   },

@@ -18,6 +18,7 @@ import { makeTimelineSearchEngineController } from '../factories/controllers/soc
 import { makeLikePostController } from '../factories/controllers/social/timeline/makeLikePostController';
 import { makeCreateComment } from '../factories/controllers/social/timeline/makeCreateComment';
 import { makeDeletePostController } from '../factories/controllers/social/timeline/makeDeletePostController';
+import multer from 'multer';
 
 const Social = express.Router();
 
@@ -67,10 +68,13 @@ Social.delete(
   adaptRoute(makeSubscribeFollowerController())
 );
 
-Social.put(
+const upload = multer();
+
+Social.post(
   '/profiles/images',
   adaptMiddleware(makeContentController()),
   adaptMiddleware(makeFeatureFlagsMiddleware('update:profile:self')),
+  upload.single('image'),
   adaptRoute(makeContentController())
 );
 

@@ -47,8 +47,6 @@ export default {
       return false;
     }
 
-    console.log('its here');
-
     schedule.scheduleJob(toSendAlert, async () => {
       const connection = await connectionsRepository.getByUserAndPlataform(
         user.id,

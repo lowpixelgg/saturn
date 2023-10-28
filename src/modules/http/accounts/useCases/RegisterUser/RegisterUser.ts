@@ -84,17 +84,17 @@ export class RegisterUser {
 
     account.addToken(token);
 
-    await this.usersRepository.create(account);
-    // const tokenObject = await this.usersRepository.createActivationToken(
-    //   account.id
-    // )
-
     // Sending the Activation-mail to user.
     await Queue.add('RegistrationMail', {
       name: account.username.value,
       email: account.email.value,
       activation_token: token.id,
     });
+
+    await this.usersRepository.create(account);
+    // const tokenObject = await this.usersRepository.createActivationToken(
+    //   account.id
+    // )
 
     return right(account);
   }

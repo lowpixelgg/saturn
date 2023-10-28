@@ -50,7 +50,6 @@ export class UserMapper {
     }
 
     if (emailOrError.isLeft()) {
-      console.log(raw.username);
       throw new Error('Email value is invalid.');
     }
 
