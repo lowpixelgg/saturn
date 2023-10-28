@@ -101,7 +101,6 @@ export class PrismaProfilesRepository implements IProfilesRepository {
       const skip = Math.floor(Math.random() * profilesCount);
 
       queryPayload.skip = skip;
-      queryPayload.take = 5;
       queryPayload.orderBy = {
         user: { createdAt: 'desc' },
       };
