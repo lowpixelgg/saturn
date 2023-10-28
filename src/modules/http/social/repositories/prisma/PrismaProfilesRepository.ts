@@ -101,7 +101,8 @@ export class PrismaProfilesRepository implements IProfilesRepository {
     }
 
     if (randomize) {
-      queryPayload.orderBy = { id: 'asc' };
+      // Adicione a lógica de randomização
+      queryPayload.orderBy = { id: 'asc' }; // Isso é apenas um exemplo, você pode ajustar a ordenação conforme necessário.
     } else {
       queryPayload.orderBy = {
         user: {
