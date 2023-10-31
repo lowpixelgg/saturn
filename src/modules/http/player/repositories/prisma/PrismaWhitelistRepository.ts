@@ -1,8 +1,8 @@
-import { Whitelist } from '@modules/http/player/domain/Whitelist'
-import { WhitelistMapper } from '@modules/http/player/mappers/WhitelistMapper'
-import { prisma } from '@infra/prisma/prisma-client'
-import { IAnswerRepository } from '../IAnswerRepository'
-import { IWhitelistRepository, SearchResponse } from '../IWhitelistRepository'
+import { Whitelist } from '@modules/http/player/domain/Whitelist';
+import { WhitelistMapper } from '@modules/http/player/mappers/WhitelistMapper';
+import { prisma } from '@infra/prisma/prisma-client';
+import { IAnswerRepository } from '../IAnswerRepository';
+import { IWhitelistRepository, SearchResponse } from '../IWhitelistRepository';
 
 export class PrismaWhitelistRepository implements IWhitelistRepository {
   constructor(private answersRepository?: IAnswerRepository) {}
@@ -12,12 +12,12 @@ export class PrismaWhitelistRepository implements IWhitelistRepository {
       where: {
         OR: [{ id: ident }, { user_id: ident }],
       },
-    })
-    return !!exists
+    });
+    return !!exists;
   }
 
   async create(whitelist: Whitelist): Promise<void> {
-    const data = WhitelistMapper.toPersistence(whitelist)
+    const data = WhitelistMapper.toPersistence(whitelist);
 
     await prisma.whitelist.create({
       data: {
@@ -26,7 +26,7 @@ export class PrismaWhitelistRepository implements IWhitelistRepository {
         status: data.status,
         createdAt: data.createdAt,
       },
-    })
+    });
   }
 
   async search(
@@ -38,16 +38,22 @@ export class PrismaWhitelistRepository implements IWhitelistRepository {
       take: perPage,
       skip: (page - 1) * perPage || 0,
       where: {},
-    }
+    };
 
     if (query) {
       queryPayload.where = {
-        OR: {
-          user: { username: { contains: query, mode: 'insensitive' } },
-        },
-      }
+        OR: [
+          {
+            user: {
+              username: {
+                contains: query,
+                mode: 'insensitive',
+              },
+            },
+          },
+        ],
+      };
     }
-
     const whitelist = await prisma.whitelist.findMany({
       ...queryPayload,
       orderBy: {
@@ -57,17 +63,17 @@ export class PrismaWhitelistRepository implements IWhitelistRepository {
         exam: true,
         user: { include: { Profile: true, Staff: true } },
       },
-    })
+    });
 
     const profileCount = await prisma.whitelist.aggregate({
       _count: true,
       where: queryPayload.where,
-    })
+    });
 
     return {
       data: whitelist.map(profile => WhitelistMapper.toDomain(profile)),
       totalCount: profileCount._count,
-    }
+    };
   }
 
   async findOneByID(id: string): Promise<Whitelist> {
@@ -82,9 +88,9 @@ export class PrismaWhitelistRepository implements IWhitelistRepository {
         },
         exam: true,
       },
-    })
+    });
 
-    return WhitelistMapper.toDomain(dbQuery)
+    return WhitelistMapper.toDomain(dbQuery);
   }
 
   async findOneByUserID(id: string): Promise<Whitelist> {
@@ -100,13 +106,13 @@ export class PrismaWhitelistRepository implements IWhitelistRepository {
         },
         exam: true,
       },
-    })
+    });
 
-    return WhitelistMapper.toDomain(dbQuery)
+    return WhitelistMapper.toDomain(dbQuery);
   }
 
   async save(whitelist: Whitelist): Promise<void> {
-    const data = WhitelistMapper.toPersistence(whitelist)
+    const data = WhitelistMapper.toPersistence(whitelist);
 
     await prisma.whitelist.update({
       where: {
@@ -115,15 +121,15 @@ export class PrismaWhitelistRepository implements IWhitelistRepository {
       data: {
         ...data,
       },
-    })
+    });
 
     if (this.answersRepository) {
-      await this.answersRepository.save(whitelist.exam)
+      await this.answersRepository.save(whitelist.exam);
     }
   }
 
   async deleteByID(id: string): Promise<void> {
-    await prisma.exam.deleteMany({ where: { whitelist_id: id } })
-    await prisma.whitelist.delete({ where: { id } })
+    await prisma.exam.deleteMany({ where: { whitelist_id: id } });
+    await prisma.whitelist.delete({ where: { id } });
   }
 }
