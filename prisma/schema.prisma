@@ -22,6 +22,7 @@ model User {
   status String?
   isVerified Boolean @default(false)
   isPremium Boolean @default(false)
+  isEarlySupporter Boolean @default(false)
   Profile Profile?
   Whitelist Whitelist? @relation("member")
   auth_system String @default("NORMAL")

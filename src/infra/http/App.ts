@@ -40,6 +40,7 @@ class Saturn {
       new PrismaUserRepository(),
       new PrismaConnectionsRepository()
     );
+
     this.setupSocket();
 
     /*

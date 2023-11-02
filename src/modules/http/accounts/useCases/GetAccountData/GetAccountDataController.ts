@@ -35,6 +35,7 @@ export class GetAccountDataController implements Controller {
         email: Parse.email.value,
         features: Parse.features,
         isPremium: Parse.isPremium,
+        isEarlySupporter: Parse.isEarlySupporter,
         appointment: Parse.appointment,
         isVerified: Parse.isVerified,
         staff: Parse.staff,

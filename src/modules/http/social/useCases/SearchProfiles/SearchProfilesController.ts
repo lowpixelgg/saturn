@@ -34,6 +34,7 @@ export class SearchProfilesController implements Controller {
           createdAt: profile.User.createdAt,
           role: profile.User.role,
           isPremium: profile.User.isPremium,
+          isEarlySupporter: profile.User.isEarlySupporter,
           isVerified: profile.User.isVerified,
           avatar: profile.avatar,
           banner: profile.banner,

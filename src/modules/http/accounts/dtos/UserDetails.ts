@@ -4,6 +4,7 @@ export type UserDetails = {
   username: string;
   role: string;
   isPremium: boolean;
+  isEarlySupporter: boolean;
   isVerified: boolean;
   auth_system: string;
   features: string[];

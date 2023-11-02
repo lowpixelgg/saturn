@@ -23,6 +23,7 @@ interface IUserProps {
   features?: string[];
   Profile?: Profile;
   isPremium?: boolean;
+  isEarlySupporter?: boolean;
   status?: string;
   staff?: Staff;
   appointment?: Appointments;
@@ -53,6 +54,10 @@ export class User extends Entity<IUserProps> {
 
   get isPremium() {
     return this.props.isPremium;
+  }
+
+  get isEarlySupporter() {
+    return this.props.isEarlySupporter;
   }
 
   get Profile() {

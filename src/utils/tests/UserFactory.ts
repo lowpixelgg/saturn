@@ -77,6 +77,7 @@ export function createdUserWithProfile() {
       features: [],
       id: '12345',
       isPremium: false,
+      isEarlySupporter: false,
       isVerified: false,
       password: '1234567',
       status: 'TRIAGEM',
