@@ -18,6 +18,7 @@ Se você é um colaborador, a escolha é sua: enviar ramificações para este re
 As ramificações são “atualizadas” e não devem ser “pessoais” para cada usuário. Isso significa que uma ramificação deve ser criada para um novo recurso, não para um playground específico do usuário.
 
 
+
 # O que programar
 Geralmente, tente enviar solicitações pull que resolvam os problemas existentes.
 Se você está procurando algo em que trabalhar, dê uma olhada no rótulo “boa primeira edição” ou em nossos macros.
