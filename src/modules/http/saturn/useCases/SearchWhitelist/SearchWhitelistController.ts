@@ -6,6 +6,7 @@ type SearchWhitelistControllerRequest = {
   query?: string;
   page?: string;
   per_page?: string;
+  status: string;
 };
 
 export class SearchWhitelistController implements Controller {
@@ -15,12 +16,14 @@ export class SearchWhitelistController implements Controller {
     query,
     page,
     per_page,
+    status,
   }: SearchWhitelistControllerRequest): Promise<HttpResponse> {
     try {
       const { data, totalCount } = await this.searchWhitelist.execute({
         query,
         page: page ? Number(page) : undefined,
         perPage: per_page ? Number(per_page) : undefined,
+        status: status ? String(status) : null,
       });
 
       const whitelists = data.map(whitelist => {

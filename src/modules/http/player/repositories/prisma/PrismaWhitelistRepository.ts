@@ -32,7 +32,8 @@ export class PrismaWhitelistRepository implements IWhitelistRepository {
   async search(
     query: string,
     page: number,
-    perPage: number
+    perPage: number,
+    status: string | null
   ): Promise<SearchResponse> {
     const queryPayload = {
       take: perPage,
@@ -54,6 +55,14 @@ export class PrismaWhitelistRepository implements IWhitelistRepository {
         ],
       };
     }
+
+    if (status) {
+      queryPayload.where = {
+        ...queryPayload.where,
+        status: status,
+      };
+    }
+
     const whitelist = await prisma.whitelist.findMany({
       ...queryPayload,
       orderBy: {

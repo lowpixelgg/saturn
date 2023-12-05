@@ -6,6 +6,7 @@ type SearchWhitelistRequest = {
   query?: string;
   page?: number;
   perPage?: number;
+  status?: string;
 };
 
 type SearchWhitelistResponse = {
@@ -20,11 +21,13 @@ export class SearchWhitelist {
     query,
     page = 1,
     perPage = 20,
+    status = null,
   }: SearchWhitelistRequest): Promise<SearchWhitelistResponse> {
     const { data, totalCount } = await this.whitelistRepository.search(
       query,
       page,
-      perPage
+      perPage,
+      status
     );
 
     return { data, totalCount };
