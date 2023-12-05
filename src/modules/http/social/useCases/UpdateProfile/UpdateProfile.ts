@@ -58,9 +58,14 @@ export class UpdateProfile {
 
     if (action === 'update:bio') {
       profile.setYoutube = youtube ? youtube : null;
-      profile.setTwitch = twitch ? twitch : null;
-      profile.setInstagram = instagram ? instagram : null;
-      profile.setDescription = description ? description : null;
+
+      if (profile.user.isPremium !== false) {
+        profile.setTwitch = twitch ? twitch : null;
+        profile.setInstagram = instagram ? instagram : null;
+        profile.setDescription = description ? description : null;
+      } else {
+        return left(new UserIsNotPremium());
+      }
     }
 
     if (action === 'update:social') {
