@@ -25,7 +25,7 @@ describe('Subscribe Follower', () => {
   it('should be able to follow new user', async () => {
     const result = await subscribeFollower.execute({
       followers_id: '12345',
-      following_id: '123456',
+      user: { id: '123456' },
     });
 
     expect(result.isRight()).toBeTruthy();
@@ -34,7 +34,7 @@ describe('Subscribe Follower', () => {
   it('not should be able to assign follow to profile', async () => {
     const result = await subscribeFollower.execute({
       followers_id: '77777',
-      following_id: '1234561',
+      user: { id: '1234561' },
     });
 
     expect(result.isLeft()).toBeTruthy();
