@@ -63,8 +63,6 @@ export class UpdateProfile {
         profile.setTwitch = twitch ? twitch : null;
         profile.setInstagram = instagram ? instagram : null;
         profile.setDescription = description ? description : null;
-      } else {
-        return left(new UserIsNotPremium());
       }
     }
 

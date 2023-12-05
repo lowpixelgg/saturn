@@ -8,7 +8,7 @@ import { SubscribeFollowerProfileDoesNotExist } from './errors/SubscribeFollower
 
 type SubscribeFollowerRequest = {
   followers_id?: string;
-  following_id?: string;
+  user: { id: string };
 };
 
 type SubscribeFollowerResponse = Either<
@@ -26,21 +26,16 @@ export class SubscribeFollower {
 
   async execute({
     followers_id,
-    following_id,
+    user,
   }: SubscribeFollowerRequest): Promise<SubscribeFollowerResponse> {
-    if (followers_id === following_id) {
+    if (followers_id === user.id) {
       return right(true);
     }
 
-    const userExists = await this.profilesRepository.exists(following_id);
     const profileExists = await this.profilesRepository.exists(followers_id);
 
     if (!profileExists) {
       return left(new SubscribeFollowerDoesNotExist());
-    }
-
-    if (!userExists) {
-      return left(new SubscribeFollowerProfileDoesNotExist());
     }
 
     const profile = await this.profilesRepository.findOne(followers_id);
@@ -48,7 +43,7 @@ export class SubscribeFollower {
     const alreadySubscribetToVisitor =
       await this.followersRepository.findByProfileParams({
         followers_id,
-        following_id,
+        following_id: user.id,
       });
 
     if (alreadySubscribetToVisitor) {
@@ -57,7 +52,7 @@ export class SubscribeFollower {
 
     const follow = Follow.create({
       followers_id,
-      following_id,
+      following_id: user.id,
     });
 
     profile.subscribeFollow(follow);

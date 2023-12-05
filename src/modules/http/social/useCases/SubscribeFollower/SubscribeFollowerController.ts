@@ -15,9 +15,9 @@ import { SubscribeFollowerUnsubscribe } from './SubscribeFollowUnFollow';
 
 type SubscribeFollowerControllerRequest = {
   followers_id?: string;
-  following_id?: string;
   findAll?: boolean;
   unfollow?: boolean;
+  user: { id: string };
 };
 
 export class SubscribeFollowerController implements Controller {
@@ -29,11 +29,11 @@ export class SubscribeFollowerController implements Controller {
 
   private async handleUnSubscribeFollower(
     followers_id: string,
-    following_id: string
+    user: { id: string }
   ): Promise<HttpResponse> {
     const result = await this.subscribeFollowerUnFollow.execute({
       followers_id,
-      following_id,
+      user,
     });
 
     if (result.isLeft()) {
@@ -73,11 +73,11 @@ export class SubscribeFollowerController implements Controller {
 
   private async handleSubscribeFollower(
     followers_id: string,
-    following_id: string
+    user: { id: string }
   ) {
     const result = await this.subscribeFollower.execute({
       followers_id,
-      following_id,
+      user,
     });
 
     if (result.isLeft()) {
@@ -99,18 +99,18 @@ export class SubscribeFollowerController implements Controller {
 
   async handle({
     followers_id,
-    following_id,
+    user,
     findAll,
     unfollow,
   }: SubscribeFollowerControllerRequest): Promise<HttpResponse> {
     if (Boolean(unfollow)) {
-      return this.handleUnSubscribeFollower(followers_id, following_id);
+      return this.handleUnSubscribeFollower(followers_id, user);
     }
 
     if (Boolean(findAll)) {
       return this.handleSubscribeFollowerFindAll(followers_id);
     } else {
-      return this.handleSubscribeFollower(followers_id, following_id);
+      return this.handleSubscribeFollower(followers_id, user);
     }
   }
 }
