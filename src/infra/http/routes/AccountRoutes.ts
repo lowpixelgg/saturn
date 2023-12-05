@@ -39,7 +39,7 @@ Account.patch(
   adaptMiddleware(
     makeRateLimitMiddleware({
       windowMs: 5 * 60 * 1000,
-      max: 1,
+      max: 5,
     })
   ),
   adaptMiddleware(makeAnonymousUserMiddleware()),

@@ -16,7 +16,7 @@ Player.post(
   adaptMiddleware(
     makeRateLimitMiddleware({
       windowMs: 15 * 60 * 1000,
-      max: 1,
+      max: 2,
     })
   ),
   adaptMiddleware(makeFeatureFlagsMiddleware('create:whitelist')),
@@ -28,7 +28,7 @@ Player.post(
   adaptMiddleware(
     makeRateLimitMiddleware({
       windowMs: 15 * 60 * 1000,
-      max: 1,
+      max: 2,
     })
   ),
   adaptMiddleware(makeFeatureFlagsMiddleware('create:whitelist')),

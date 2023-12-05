@@ -38,7 +38,7 @@ Social.put(
   adaptMiddleware(
     makeRateLimitMiddleware({
       windowMs: 10 * 60 * 1000,
-      max: 2,
+      max: 5,
     })
   ),
   adaptMiddleware(makeFeatureFlagsMiddleware('update:profile:self')),
@@ -47,12 +47,6 @@ Social.put(
 
 Social.get(
   '/profiles/subscribers/visitors/:visitors_id',
-  adaptMiddleware(
-    makeRateLimitMiddleware({
-      windowMs: 3 * 60 * 1000,
-      max: 4,
-    })
-  ),
   adaptMiddleware(makeFeatureFlagsMiddleware('read:subscribers:list')),
   adaptRoute(makeGetProfileSubscribedVisitorsController())
 );
@@ -62,7 +56,7 @@ Social.put(
   adaptMiddleware(
     makeRateLimitMiddleware({
       windowMs: 3 * 60 * 1000,
-      max: 4,
+      max: 3,
     })
   ),
   adaptMiddleware(makeFeatureFlagsMiddleware('profile:subscribe')),
@@ -74,7 +68,7 @@ Social.put(
   adaptMiddleware(
     makeRateLimitMiddleware({
       windowMs: 2 * 60 * 1000,
-      max: 1,
+      max: 3,
     })
   ),
   adaptMiddleware(makeFeatureFlagsMiddleware('profile:subscribe')),
@@ -83,12 +77,6 @@ Social.put(
 
 Social.get(
   '/profiles/subscribers/follow',
-  adaptMiddleware(
-    makeRateLimitMiddleware({
-      windowMs: 2 * 60 * 1000,
-      max: 1,
-    })
-  ),
   adaptMiddleware(makeFeatureFlagsMiddleware('profile:subscribe')),
   adaptRoute(makeSubscribeFollowerController())
 );
