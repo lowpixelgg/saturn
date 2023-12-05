@@ -25,6 +25,18 @@ export default async function getNonChartInfos() {
     },
   });
 
+  const interviewApprovedUsers = await prisma.user.findMany({
+    where: {
+      status: 'ENTREVISTADO',
+    },
+  });
+
+  const interviewReprovedUsers = await prisma.user.findMany({
+    where: {
+      status: 'REPROVADO_ENTREVISTA',
+    },
+  });
+
   const verifiedUsers = await prisma.user.findMany({
     where: {
       isVerified: true,
@@ -36,6 +48,8 @@ export default async function getNonChartInfos() {
     whitelists: whitelists.length,
     approvedWhitelists: approvedWhitelists.length,
     reprovedWhitelists: reprovedWhitelists.length,
+    interviewApprovedUsers: interviewApprovedUsers.length,
+    interviewReprovedUsers: interviewReprovedUsers.length,
     premiumUsers: premiumUsers.length,
     verifiedUsers: verifiedUsers.length,
     posts: posts.length,
