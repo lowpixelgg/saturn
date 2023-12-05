@@ -10,7 +10,13 @@ export const adaptMiddleware = (middleware: Middleware) => {
       ...(request.headers || {}),
     };
 
-    const httpResponse = await middleware.handle(requestData, request.body);
+    const httpResponse = await middleware.handle(
+      requestData,
+      request.body,
+      request,
+      response,
+      next
+    );
 
     /*
      *

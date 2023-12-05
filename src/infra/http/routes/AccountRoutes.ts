@@ -15,6 +15,7 @@ import { makeAnonymousUserMiddleware } from '../factories/middlewares/makeAnonym
 import { makeNotificationController } from '../factories/controllers/AccountsFactory/makeNotificationController';
 import { makeSocialGoogleAuthenticateController } from '../factories/controllers/AccountsFactory/makeSocialGoogleAuthenticateController';
 import { makeDiscordConnectionController } from '../factories/controllers/AccountsFactory/Connections/makeDiscordConnectionController';
+import { makeRateLimitMiddleware } from '../factories/middlewares/makeRateLimitMiddleware';
 
 const Account = express.Router();
 
@@ -35,6 +36,12 @@ Account.post('/register', adaptRoute(makeRegisterController()));
 
 Account.patch(
   '/activate/:id',
+  adaptMiddleware(
+    makeRateLimitMiddleware({
+      windowMs: 5 * 60 * 1000,
+      max: 1,
+    })
+  ),
   adaptMiddleware(makeAnonymousUserMiddleware()),
   adaptMiddleware(makeFeatureFlagsMiddleware('read:activation_token')),
   adaptRoute(makeActivateUserController())
@@ -42,12 +49,24 @@ Account.patch(
 
 Account.get(
   '/recovery/send/:email',
+  adaptMiddleware(
+    makeRateLimitMiddleware({
+      windowMs: 15 * 60 * 1000,
+      max: 1,
+    })
+  ),
   adaptMiddleware(makeAnonymousUserMiddleware()),
   adaptRoute(makeSendRecoveryEmailController())
 );
 
 Account.post(
   '/recovery/change/:id',
+  adaptMiddleware(
+    makeRateLimitMiddleware({
+      windowMs: 10 * 60 * 1000,
+      max: 1,
+    })
+  ),
   adaptMiddleware(makeAnonymousUserMiddleware()),
   adaptRoute(makeRecoveryPasswordController())
 );
@@ -61,6 +80,12 @@ Account.get(
 
 Account.patch(
   '/notification/read',
+  adaptMiddleware(
+    makeRateLimitMiddleware({
+      windowMs: 5 * 60 * 1000,
+      max: 5,
+    })
+  ),
   adaptMiddleware(makeAuthenticationMiddleware()),
   adaptMiddleware(makeFeatureFlagsMiddleware('update:profile:self')),
   adaptRoute(makeNotificationController())
@@ -68,6 +93,12 @@ Account.patch(
 
 Account.post(
   '/connections/discord/:code',
+  adaptMiddleware(
+    makeRateLimitMiddleware({
+      windowMs: 10 * 60 * 1000,
+      max: 1,
+    })
+  ),
   adaptMiddleware(makeAuthenticationMiddleware()),
   adaptRoute(makeDiscordConnectionController())
 );

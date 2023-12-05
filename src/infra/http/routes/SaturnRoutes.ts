@@ -13,6 +13,7 @@ import { makeSaturnGetWeekTimes } from '../factories/controllers/saturn/makeSatu
 import { makeChangeAppointmentStatusController } from '../factories/controllers/player/makeChangeAppointmentStatusController';
 import { makeGetStaffAppointmentsController } from '../factories/controllers/saturn/makeGetStaffAppointmentsController';
 import { makeChangeStaffInterviewController } from '../factories/controllers/saturn/makeChangeStaffInterviewController';
+import { makeRateLimitMiddleware } from '../factories/middlewares/makeRateLimitMiddleware';
 
 const Saturn = express.Router();
 
@@ -39,6 +40,12 @@ Saturn.get(
 
 Saturn.post(
   '/staff/appointment/week-times',
+  adaptMiddleware(
+    makeRateLimitMiddleware({
+      windowMs: 10 * 60 * 1000,
+      max: 5,
+    })
+  ),
   adaptMiddleware(makeAuthenticationMiddleware()),
   adaptMiddleware(makeFeatureFlagsMiddleware('update:week-times')),
   adaptRoute(makeSaturnCreateWeekTimesController())
@@ -46,6 +53,12 @@ Saturn.post(
 
 Saturn.patch(
   '/player/whitelist/update',
+  adaptMiddleware(
+    makeRateLimitMiddleware({
+      windowMs: 5 * 60 * 1000,
+      max: 5,
+    })
+  ),
   adaptMiddleware(makeAuthenticationMiddleware()),
   adaptMiddleware(makeFeatureFlagsMiddleware('update:whitelist')),
   adaptRoute(makeSaturnUpdateWhitelistStatusController())
@@ -68,6 +81,12 @@ Saturn.get(
 
 Saturn.put(
   '/player/appointments/:appointmentId/:tokenId',
+  adaptMiddleware(
+    makeRateLimitMiddleware({
+      windowMs: 10 * 60 * 1000,
+      max: 2,
+    })
+  ),
   adaptMiddleware(makeAuthenticationMiddleware()),
   adaptRoute(makeChangeStaffInterviewController())
 );
