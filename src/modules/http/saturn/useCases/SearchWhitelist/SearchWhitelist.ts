@@ -6,7 +6,7 @@ type SearchWhitelistRequest = {
   query?: string;
   page?: number;
   perPage?: number;
-  status?: string;
+  status?: string[];
 };
 
 type SearchWhitelistResponse = {

@@ -33,7 +33,7 @@ export class PrismaWhitelistRepository implements IWhitelistRepository {
     query: string,
     page: number,
     perPage: number,
-    status: string | null
+    status: string[] | null
   ): Promise<SearchResponse> {
     const queryPayload = {
       take: perPage,
@@ -48,7 +48,6 @@ export class PrismaWhitelistRepository implements IWhitelistRepository {
             user: {
               username: {
                 contains: query,
-                mode: 'insensitive',
               },
             },
           },
@@ -59,7 +58,9 @@ export class PrismaWhitelistRepository implements IWhitelistRepository {
     if (status) {
       queryPayload.where = {
         ...queryPayload.where,
-        status: status,
+        status: {
+          in: status,
+        },
       };
     }
 
