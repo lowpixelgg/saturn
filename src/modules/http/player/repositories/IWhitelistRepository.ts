@@ -16,6 +16,6 @@ export interface IWhitelistRepository {
     query: string,
     page: number,
     perPage: number,
-    status: string[]
+    status: string
   ): Promise<SearchResponse>;
 }
