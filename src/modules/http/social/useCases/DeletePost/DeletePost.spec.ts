@@ -30,14 +30,20 @@ describe('Delete Post', () => {
     if (post.isRight()) {
       await postsRepository.create(post.value);
 
-      const result = await deletePost.execute({ postId: post.value.id });
+      const result = await deletePost.execute({
+        user: { id: '123456' },
+        postId: post.value.id,
+      });
 
       expect(result.isRight()).toBeTruthy();
     }
   });
 
   it('not should be able to delete user post with invalid post id', async () => {
-    const result = await deletePost.execute({ postId: '12356551' });
+    const result = await deletePost.execute({
+      user: { id: '123456' },
+      postId: '12356551',
+    });
 
     expect(result.isLeft()).toBeTruthy();
   });
