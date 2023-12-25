@@ -48,7 +48,6 @@ export class PrismaWhitelistRepository implements IWhitelistRepository {
             user: {
               username: {
                 contains: query,
-                mode: 'insensitive',
               },
             },
           },
@@ -57,9 +56,13 @@ export class PrismaWhitelistRepository implements IWhitelistRepository {
     }
 
     if (status) {
+      const statusArray = status.split(',').map(s => s.trim());
+
       queryPayload.where = {
         ...queryPayload.where,
-        status: status,
+        status: {
+          in: statusArray,
+        },
       };
     }
 

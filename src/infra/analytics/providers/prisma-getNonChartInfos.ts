@@ -7,6 +7,12 @@ export default async function getNonChartInfos() {
   const comments = await prisma.comment.findMany();
   const likes = await prisma.likes.findMany();
 
+  const pendingWhitelistUsers = await prisma.user.findMany({
+    where: {
+      status: 'TRIAGEM',
+    },
+  });
+
   const approvedWhitelists = await prisma.whitelist.findMany({
     where: {
       status: 'APROVADO',
@@ -46,6 +52,7 @@ export default async function getNonChartInfos() {
   return {
     users: users.length,
     whitelists: whitelists.length,
+    pendingWhitelistUsers: pendingWhitelistUsers.length,
     approvedWhitelists: approvedWhitelists.length,
     reprovedWhitelists: reprovedWhitelists.length,
     interviewApprovedUsers: interviewApprovedUsers.length,
