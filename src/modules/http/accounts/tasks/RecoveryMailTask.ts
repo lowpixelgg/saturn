@@ -1,4 +1,4 @@
-import Mail from '@infra/libs/nodemailer/nodemailer';
+import { resend } from '@infra/libs/resend';
 import { RecoveryEmailTemplate } from '@templates/EmailTemplates/RecoveryEmailTemplate';
 
 export default {
@@ -8,9 +8,9 @@ export default {
   },
 
   async handle({ data }) {
-    await Mail.sendMail({
-      from: 'Rocket Roleplay <noreply@rocketmta.com>',
-      to: `${data.name} <${data.email}>`,
+    await resend.emails.send({
+      from: 'Rocket Roleplay <onboarding@resend.dev>',
+      to: data.email,
       subject: 'Recuperação de conta',
       html: RecoveryEmailTemplate(data.name, data.recovery_token),
     });

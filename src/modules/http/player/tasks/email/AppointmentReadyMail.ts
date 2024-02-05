@@ -1,4 +1,4 @@
-import Mail from '@infra/libs/nodemailer/nodemailer';
+import { resend } from '@infra/libs/resend';
 import { AppointmentReadyTemplate } from '@templates/AppointmentTemplates/AppointmentReadyTemplate';
 
 export default {
@@ -8,9 +8,9 @@ export default {
   },
 
   async handle({ data }) {
-    await Mail.sendMail({
+    await resend.emails.send({
       from: 'Rocket Roleplay <noreply@rocketmta.com>',
-      to: `${data.username} <${data.email}>`,
+      to: data.email,
       subject: 'Esta na hora! Entre na chamada da sua entrevista.',
       html: AppointmentReadyTemplate(data.username, data.channelId),
     });

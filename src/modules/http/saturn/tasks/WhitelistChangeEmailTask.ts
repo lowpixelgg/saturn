@@ -1,4 +1,4 @@
-import Mail from '@infra/libs/nodemailer/nodemailer';
+import { resend } from '@infra/libs/resend';
 import { WhitelistChangeStatus } from '@templates/EmailTemplates/WhitelistChangeStatus';
 
 export default {
@@ -8,9 +8,9 @@ export default {
   },
 
   async handle({ data }) {
-    await Mail.sendMail({
+    await resend.emails.send({
       from: 'Rocket Roleplay <noreply@rocketmta.com>',
-      to: `${data.name} <${data.email}>`,
+      to: data.email,
       subject: 'A sua whitelist mudou de status.',
       html: WhitelistChangeStatus(data.name),
     });
