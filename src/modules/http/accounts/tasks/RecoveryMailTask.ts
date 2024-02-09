@@ -9,7 +9,7 @@ export default {
 
   async handle({ data }) {
     await resend.emails.send({
-      from: 'Rocket Roleplay <onboarding@resend.dev>',
+      from: 'Rocket Roleplay <onboarding@lowpixel.gg>',
       to: data.email,
       subject: 'Recuperação de conta',
       html: RecoveryEmailTemplate(data.name, data.recovery_token),

@@ -9,7 +9,7 @@ export default {
 
   async handle({ data }) {
     await resend.emails.send({
-      from: 'Rocket Roleplay <onboarding@resend.dev>',
+      from: 'Rocket Roleplay <onboarding@lowpixel.gg>',
       to: data.email,
       subject: 'Ative seu cadastro na Rocket Roleplay',
       html: RegistrationEmailTemplate(data.name, data.activation_token),
