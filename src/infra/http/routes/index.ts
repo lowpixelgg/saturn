@@ -2,13 +2,10 @@ import express from 'express';
 import { Account } from './AccountRoutes';
 import { Social } from './SocialRoutes';
 import { Player } from './PlayerRoutes';
-import { notFound } from '@core/infra/HttpResponse';
 import { Saturn } from './SaturnRoutes';
 import { Analytics } from './Analytics';
 import { Game } from './GameRoutes';
-import multer from 'multer';
-import { update } from 'lodash';
-import { adaptRoute } from '@core/infra/adapters/ExpressRouteAdapter';
+import { Dev } from './DevRoutes';
 
 const Router = express.Router();
 
@@ -18,6 +15,7 @@ Router.use('/v1/player', Player);
 Router.use('/v1/saturn', Saturn);
 Router.use('/v1/', Analytics);
 Router.use('/v1/game', Game);
+Router.use('/v1/', Dev);
 
 Router.get('*', (_, res) =>
   res
