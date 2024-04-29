@@ -35,7 +35,6 @@ yarn tests
 ```
 
 #### SMTP
-> For sending emails to users and customers we use sendinblue in production. However, in a development environment, we strongly recommend that you use the [Mailtrap](https://mailtrap.io)
 > To send emails to users, we use [Resend](https://resend.com/), you need to create your Api key and configure it.
 ```env
 MAILER_API_KEY=[RESEND_API_KEY]
