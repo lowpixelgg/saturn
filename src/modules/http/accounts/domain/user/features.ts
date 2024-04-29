@@ -1,4 +1,4 @@
-const availableFeatures = new Set([
+export const availableFeatures = new Set([
   // USER
   'create:user',
   'read:user',
