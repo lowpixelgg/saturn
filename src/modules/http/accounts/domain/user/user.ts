@@ -7,7 +7,7 @@ import { Name } from '@modules/http/accounts/domain/user/Username';
 import { InvalidEmailError } from '@modules/http/accounts/domain/user/errors/InvalidEmailError';
 import { InvalidPasswordError } from '@modules/http/accounts/domain/user/errors/InvalidPasswordError';
 import { InvalidNameError } from '@modules/http/accounts/domain/user/errors/InvalidNameError';
-import { Profile, Staff, Appointments } from '@prisma/client';
+import { Profile, Staff, Appointments, Roles } from '@prisma/client';
 import { Notifications } from './Notifications';
 import { Notification } from './Notification';
 import { Connection } from './Connection';
@@ -19,7 +19,7 @@ interface IUserProps {
   username: Name;
   email: Email;
   password: Password;
-  role?: string;
+  role?: Roles;
   features?: string[];
   Profile?: Profile;
   isPremium?: boolean;

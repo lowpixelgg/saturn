@@ -9,6 +9,7 @@ import { InvalidEmailError } from '@modules/http/accounts/domain/user/errors/Inv
 import { User } from '@modules/http/accounts/domain/user/user';
 import { IUserRepository } from '@modules/http/accounts/repositories/IUserRepository';
 import { availableFeatures } from '../../domain/user/features';
+import { Roles } from '@prisma/client'; 
 
 type CreateUserResponse = Either<
   | AccountAleardyExists
@@ -43,7 +44,7 @@ export class CreateUser {
       email: emailOrError.value,
       password: passwordOrError.value,
       features: Array.from(availableFeatures),
-      role: "ADMIN"
+      role: Roles.ADMIN
     });
 
     if (accountOrErr.isLeft()) {

@@ -113,6 +113,7 @@ export class UserMapper {
       auth_system: user.auth_system,
       status: user.status,
       timeout: user.timeout,
+      role: user.role,
     };
   }
 }
